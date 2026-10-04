@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ponto - Trattoria Aldini</title>
+  <link rel="stylesheet" href="ponto.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item">Pro. Vendidos</a>
+        <a href="estoque.html" class="menu-item">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item active">Ponto</a>
+        <a href="vencimento.html" class="menu-item">Vencimento</a>
+        <a href="parcerias.html" class="menu-item">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item">Funcionários</a>
+      </nav>
+      <button class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Controle de Ponto</h1>
+        <button id="btnPdf" class="pdf-btn">📄 Baixar PDF</button>
+        <button id="openModalBtn" class="add-btn">+ Registrar Ponto</button>
+      </header>
+
+      <div class="ponto-list">
+        <h2>Histórico de Pontos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Funcionário</th>
+              <th>Data</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="pontoBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="pontoModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitulo">Registrar Ponto</h3>
+      <form id="pontoForm">
+        <input type="hidden" id="editIndex">
+
+        <label>Funcionário:</label>
+        <input type="text" id="funcionario" placeholder="Nome do funcionário" required>
+
+        <label>Data:</label>
+        <input type="date" id="data" required>
+
+        <label>Horário de Entrada:</label>
+        <input type="time" id="entrada" required>
+
+        <label>Horário de Saída:</label>
+        <input type="time" id="saida">
+
+        <div class="modal-buttons">
+          <button type="button" id="cancelModalBtn">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<script src="../db.js"></script>
+<script src="ponto.js"></script>  <!-- ou saida.js / ponto.js -->ipt>
+</body>
+</html>

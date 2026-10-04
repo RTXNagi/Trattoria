@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funcionários - Trattoria Aldini</title>
+  <link rel="stylesheet" href="funcionarios.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item">Pro. Vendidos</a>
+        <a href="estoque.html" class="menu-item">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item">Ponto</a>
+        <a href="vencimento.html" class="menu-item">Vencimento</a>
+        <a href="parcerias.html" class="menu-item">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item active">Funcionários</a>
+      </nav>
+      <button class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Funcionários</h1>
+        <button id="openModalBtn" class="add-btn">+ Adicionar Funcionário</button>
+      </header>
+
+      <div class="funcionarios-list">
+        <h2>Equipe da Trattoria</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Cargo</th>
+              <th>Telefone</th>
+              <th>Salário</th>
+              <th>Estrelas</th>
+              <th>Faltas</th>
+              <th>Meta (%)</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="funcionariosBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Adicionar / Editar -->
+  <div id="funcModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitulo">Adicionar Funcionário</h3>
+      <form id="funcForm">
+        <input type="hidden" id="editIndex">
+
+        <label>Nome completo:</label>
+        <input type="text" id="nome" required>
+
+        <label>Cargo:</label>
+        <select id="cargo" required>
+          <option value="">Selecione</option>
+          <option value="Pizzaiolo">Pizzaiolo</option>
+          <option value="Garçom">Garçom</option>
+          <option value="Atendente">Atendente</option>
+          <option value="Entregador">Entregador</option>
+          <option value="Gerente">Gerente</option>
+          <option value="Auxiliar de Cozinha">Auxiliar de Cozinha</option>
+          <option value="Caixa">Caixa</option>
+        </select>
+
+        <label>Telefone:</label>
+        <input type="text" id="telefone" placeholder="(11) 99999-9999">
+
+        <label>Salário (R$):</label>
+        <input type="number" id="salario" step="0.01" min="0" required>
+
+        <label>Data de Admissão:</label>
+        <input type="date" id="data_admissao" required>
+
+        <!-- Só aparece na edição -->
+        <div id="camposExtras" style="display: none;">
+          <label>Estrelas (1 a 5):</label>
+          <select id="estrelas">
+            <option value="1">⭐ 1</option>
+            <option value="2">⭐⭐ 2</option>
+            <option value="3">⭐⭐⭐ 3</option>
+            <option value="4">⭐⭐⭐⭐ 4</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+          </select>
+
+          <label>Faltas:</label>
+          <input type="number" id="faltas" min="0" value="0">
+
+          <label>Meta batida (%):</label>
+          <input type="number" id="meta" min="0" max="100" value="0">
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" id="cancelModalBtn">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Promoção -->
+  <div id="promoModal" class="modal">
+    <div class="modal-content">
+      <h3>Promover Funcionário</h3>
+      <p id="promoInfo" style="margin-bottom: 15px;"></p>
+
+      <label>Novo Cargo:</label>
+      <select id="novoCargo" required>
+        <option value="Pizzaiolo">Pizzaiolo</option>
+        <option value="Garçom">Garçom</option>
+        <option value="Atendente">Atendente</option>
+        <option value="Entregador">Entregador</option>
+        <option value="Gerente">Gerente</option>
+        <option value="Auxiliar de Cozinha">Auxiliar de Cozinha</option>
+        <option value="Caixa">Caixa</option>
+      </select>
+
+      <label>Novo Salário (R$):</label>
+      <input type="number" id="novoSalario" step="0.01" min="0" required>
+
+      <div class="modal-buttons">
+        <button type="button" id="cancelPromoBtn">Cancelar</button>
+        <button type="button" id="confirmPromoBtn">Confirmar Promoção</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="funcionarios.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel ADM - Trattoria Aldini</title>
+  <link rel="stylesheet" href="paineladm.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item active">Pro. Vendidos</a>
+        <a href="ESTOQUE.HTML" class="menu-item">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item">Ponto</a>
+        <a href="vencimento.html" class="menu-item">Vencimento</a>
+        <a href="parcerias.html" class="menu-item">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item">Funcionários</a>
+      </nav>
+
+      <button href="/login/login.html" class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Lista dos Mais Vendidos</h1>
+      </header>
+
+      <div class="content">
+        <div class="sales-list">
+          <h2>Top 10 Mais Vendidos</h2>
+          <ol>
+            <li><span>1. Calabresa</span><span class="pizza-icon">🍕</span></li>
+            <li><span>2. Portuguesa</span><span class="pizza-icon">🍕</span></li>
+            <li><span>3. Frango com Catupiry</span><span class="pizza-icon">🍕</span></li>
+            <li><span>4. Margueritta</span><span class="pizza-icon">🍕</span></li>
+            <li><span>5. Quatro Queijos</span><span class="pizza-icon">🍕</span></li>
+            <li><span>6. Pepperoni</span><span class="pizza-icon">🍕</span></li>
+            <li><span>7. Carne Seca</span><span class="pizza-icon">🍕</span></li>
+            <li><span>8. Mussarela</span><span class="pizza-icon">🍕</span></li>
+            <li><span>9. Queijo Gorgonzola</span><span class="pizza-icon">🍕</span></li>
+            <li><span>10. Queijo</span><span class="pizza-icon">🍕</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação -->
+  <div id="logoutModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Deseja realmente sair?</h3>
+      <div class="modal-buttons">
+        <button id="cancelBtn">Cancelar</button>
+        <button id="confirmBtn">Sim, Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="painel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<script src="../db.js"></script>   <!-- ajuste o caminho se necessário -->
+
+</body>
+</html>

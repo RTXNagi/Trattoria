@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - Trattoria Aldini</title>
+  <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+  <div class="italia">
+
+    <div class="login-container">
+      <div class="steve-small">
+        <img src="steve-pizza.png" alt="Steve Pizza">
+      </div>
+
+      <div class="card">
+        <h1>Trattoria Aldini</h1>
+        <p class="subtitle">Crie sua conta</p>
+
+        <form id="cadastroForm" class="form">
+          <input type="text" id="nome" placeholder="Nome completo" required>
+          <input type="email" id="email" placeholder="Email" required>
+          
+          <div class="password-group">
+            <input type="password" id="senha" placeholder="Senha" required>
+            <button type="button" id="toggleSenha" class="toggle-password">👁️</button>
+          </div>
+          
+          <div class="password-group">
+            <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required>
+            <button type="button" id="toggleConfirmarSenha" class="toggle-password">👁️</button>
+          </div>
+          
+          <button type="submit" class="btn">Cadastrar</button>
+        </form>
+
+        <p id="errorMessage" class="error"></p>
+
+        <div class="toggle-link">
+          <span>Já tem conta?</span>
+          <button id="loginBtn" class="link-btn">Entrar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="cadastro.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<script src="../db.js"></script>   <!-- ajuste o caminho se necessário -->
+
+</body>
+</html>

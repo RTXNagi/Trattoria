@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #1a1208;
+}
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: #3b2410;
+}
+
+/* ============ FUNDO ITÁLIA ============ */
+.italia {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(90deg, #1f7a3a 0%, #1f7a3a 33.33%, #f5ecd7 33.33%, #f5ecd7 66.66%, #b7302b 66.66%, #b7302b 100%);
+}
+
+/* Textura premium */
+.italia::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 25% 30%, rgba(0,0,0,0.08) 0%, transparent 3px),
+    radial-gradient(circle at 75% 65%, rgba(0,0,0,0.07) 0%, transparent 3px),
+    radial-gradient(circle at 45% 85%, rgba(0,0,0,0.06) 0%, transparent 4px);
+  background-size: 80px 80px;
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.italia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(30,15,5,0.5) 100%);
+  pointer-events: none;
+}
+
+/* Ornamentos */
+.ornamento {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: min(580px, 92%);
+  opacity: 0;
+  animation: fadeDown 1s ease-out forwards;
+}
+
+.ornamento-bottom {
+  animation: fadeUp 1s 0.4s ease-out forwards;
+}
+
+.linha {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59,36,16,0.6), transparent);
+}
+
+.icone-topo {
+  width: 38px;
+  height: 38px;
+  color: #3b2410;
+}
+
+.icone-rodape {
+  width: 160px;
+  height: 32px;
+  color: #3b2410;
+}
+
+/* ============ ANIMAÇÕES GLOBAIS ============ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

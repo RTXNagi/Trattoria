@@ -1,0 +1,186 @@
+/* ============ MIOLO CENTRAL - VERTICALMENTE CENTRALIZADO ============ */
+.splash {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;        /* Centraliza verticalmente */
+  text-align: center;
+  gap: 40px;
+  min-height: 100vh;              /* Garante centralização */
+  padding: 20px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ============ EMBLEMA (Steve Pizza) ============ */
+.emblema {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 25px 35px rgba(30,15,5,0.5));
+  margin: 0 auto;
+}
+
+.anel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: girarLento 26s linear infinite;
+}
+
+.logo {
+  width: 205px;
+  height: 205px;
+  object-fit: contain;
+  animation: flutuar 4s ease-in-out infinite;
+  filter: drop-shadow(0 15px 20px rgba(0,0,0,0.35));
+  z-index: 2;
+}
+
+/* Vapor */
+.vapor {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.vapor span {
+  width: 9px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 248, 230, 0.85);
+  filter: blur(7px);
+  animation: vapor 3.2s ease-in-out infinite;
+}
+
+.vapor span:nth-child(2) { animation-delay: 0.5s; width: 7px; height: 28px; }
+.vapor span:nth-child(3) { animation-delay: 1.1s; width: 10px; height: 35px; }
+
+/* Título */
+.titulo {
+  opacity: 0;
+  animation: fadeUp 1s 0.6s ease-out forwards;
+  width: 100%;
+}
+
+.sobre-titulo {
+  font-family: 'Dancing Script', cursive;
+  font-size: 24px;
+  color: #3b2410;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.titulo h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 7.5vw, 64px);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1.5px;
+  color: #2a1608;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  transform: rotate(-2.5deg);
+  margin: 8px 0;
+}
+
+.sub-titulo {
+  font-style: italic;
+  font-size: 19px;
+  letter-spacing: 5px;
+  color: #3b2410;
+  opacity: 0.8;
+}
+
+/* Barra de Carregamento */
+.progress-container {
+  width: 240px;
+  height: 4px;
+  background: rgba(59,36,16,0.25);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px auto 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #b7302b, #1f7a3a, #b7302b);
+  transition: width 3.6s linear;
+  border-radius: 4px;
+}
+
+/* Botão pular */
+.skip-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(59,36,16,0.75);
+  color: #f5ecd7;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.skip-btn:hover {
+  opacity: 1;
+  background: #3b2410;
+  transform: translateY(-2px);
+}
+
+/* ============ ANIMAÇÕES ============ */
+@keyframes girarLento { 
+  to { transform: rotate(360deg); } 
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-14px) rotate(3deg); }
+}
+
+@keyframes vapor {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  25% { opacity: 0.9; }
+  100% { transform: translateY(-85px) scale(1.8); opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .emblema { width: 220px; height: 220px; }
+  .logo { width: 170px; height: 170px; }
+  .progress-container { width: 200px; }
+  .skip-btn { 
+    bottom: 20px; 
+    right: 20px; 
+    font-size: 13px; 
+    padding: 7px 16px; 
+  }
+}

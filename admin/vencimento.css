@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #1f7a3a 0%, #1f7a3a 33.33%, #f5ecd7 33.33%, #f5ecd7 66.66%, #b7302b 66.66%, #b7302b 100%);
+}
+
+.sidebar {
+  width: 260px;
+  background: #2a1608;
+  color: #f5ecd7;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 30px;
+  border-bottom: 1px solid rgba(245, 236, 215, 0.2);
+}
+
+.steve-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.sidebar-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+}
+
+.menu {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.menu-item {
+  display: block;
+  padding: 14px 25px;
+  color: #f5ecd7;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: #b7302b;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #f5ecd7;
+}
+
+.topbar {
+  margin-bottom: 25px;
+}
+
+.topbar h1 {
+  font-family: 'Playfair Display', serif;
+  color: #2a1608;
+}
+
+.vencimento-list {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.vencimento-list h2 {
+  margin-bottom: 20px;
+  color: #b7302b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f5ecd7;
+  color: #2a1608;
+  font-weight: bold;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status.good {
+  background: #d4edda;
+  color: #1f7a3a;
+}
+
+.status.warning {
+  background: #fff3cd;
+  color: #b7302b;
+}
+
+.status.expired {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.btn-logout {
+  margin: 20px;
+  padding: 14px;
+  background: #b7302b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-logout:hover {
+  background: #8a1e1e;
+}

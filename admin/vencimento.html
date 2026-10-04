@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vencimento - Trattoria Aldini</title>
+  <link rel="stylesheet" href="vencimento.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item">Pro. Vendidos</a>
+        <a href="estoque.html" class="menu-item">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item">Ponto</a>
+        <a href="vencimento.html" class="menu-item active">Vencimento</a>
+        <a href="parcerias.html" class="menu-item">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item">Funcionários</a>
+      </nav>
+      <button class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Controle de Vencimento</h1>
+      </header>
+
+      <div class="vencimento-list">
+        <h2>Produtos Vencidos ou Próximos do Vencimento</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Lote</th>
+              <th>Validade</th>
+              <th>Quantidade</th>
+              <th>Status</th>
+              <th>Dias</th>
+            </tr>
+          </thead>
+          <tbody id="vencimentoBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="vencimento.js"></script>
+</body>
+</html>

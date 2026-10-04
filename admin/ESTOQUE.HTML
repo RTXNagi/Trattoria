@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estoque - Trattoria Aldini</title>
+  <link rel="stylesheet" href="estoque.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item">Pro. Vendidos</a>
+        <a href="estoque.html" class="menu-item active">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item">Ponto</a>
+        <a href="vencimento.html" class="menu-item">Vencimento</a>
+        <a href="parcerias.html" class="menu-item">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item">Funcionários</a>
+      </nav>
+      <button class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Itens em Estoque</h1>
+      </header>
+
+      <div class="stock-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Fabricante</th>
+              <th>Lote</th>
+              <th>Data de Chegada</th>
+              <th>Validade</th>
+              <th>Quantidade</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="estoqueBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div id="produtoModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitulo">Editar Produto</h3>
+      <form id="produtoForm">
+        <input type="hidden" id="editIndex">
+
+        <label>Nome do Produto:</label>
+        <input type="text" id="produto" required>
+
+        <label>Fabricante:</label>
+        <input type="text" id="fabricante">
+
+        <label>Lote:</label>
+        <div class="lote-group">
+          <span class="lote-prefix">LOT-</span>
+          <input type="text" id="lote" placeholder="0000">
+        </div>
+
+        <label>Data de Chegada:</label>
+        <input type="date" id="chegada">
+
+        <label>Validade:</label>
+        <input type="date" id="validade">
+
+        <label>Quantidade:</label>
+        <div class="qtd-group">
+          <input type="number" id="quantidadeNum" step="0.01" min="0" required>
+          <select id="unidade">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="L">L</option>
+            <option value="ml">ml</option>
+            <option value="un">un</option>
+            <option value="cx">cx</option>
+            <option value="pct">pct</option>
+          </select>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" id="btnCancelar">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="estoque.js"></script>
+</body>
+</html>

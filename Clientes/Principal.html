@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Trattoria Aldini - Peça já</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="principal.css">
+</head>
+<body>
+
+  <!-- TOPO -->
+  <header class="top-bar">
+    <div class="endereco" id="btnEndereco">
+      <span class="pin">📍</span>
+      <div>
+        <small>Entregar em</small>
+        <strong id="textoEndereco">Definir endereço</strong>
+      </div>
+    </div>
+
+    <div class="topo-direita">
+      <button type="button" class="btn-carrinho-topo" id="btnCarrinhoTopo" title="Sacola">
+        <span class="icone-sacola">🛒</span>
+        <span class="badge-carrinho" id="badgeCarrinho" style="display:none;">0</span>
+      </button>
+
+      <div class="auth-btns" id="authBtns">
+        <button type="button" class="btn-entrar" id="btnEntrar">Entrar</button>
+        <button type="button" class="btn-cadastrar" id="btnCadastrar">Cadastrar-se</button>
+      </div>
+
+      <button type="button" class="btn-perfil" id="btnPerfil" style="display:none;">
+        <img id="fotoPerfilTopo" src="" alt="" style="display:none;">
+        <span id="iconePerfilPadrao">👤</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- BUSCA -->
+  <div class="search-wrap">
+    <input type="text" id="busca" placeholder="Buscar no cardápio...">
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner">
+    <h1>Trattoria Aldini</h1>
+    <p>Pizzas artesanais · Forno a lenha</p>
+    <span class="taxa">Entrega rápida na região</span>
+  </div>
+
+  <!-- PROMOÇÕES -->
+  <section class="promos-section">
+    <div class="promos-header">
+      <h2>Promoções</h2>
+    </div>
+    <div class="carrossel-wrap">
+      <button type="button" class="seta seta-esq" id="promoPrev">‹</button>
+      <div class="carrossel" id="carrosselPromos">
+        <!-- preenchido via JS -->
+      </div>
+      <button type="button" class="seta seta-dir" id="promoNext">›</button>
+    </div>
+    <div class="bolinhas" id="promoBolinhas"></div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <div class="cats" id="cats">
+    <button type="button" class="cat active" data-cat="todos">Todos</button>
+    <button type="button" class="cat" data-cat="Pizza">Salgadas</button>
+    <button type="button" class="cat" data-cat="Doce">Doces</button>
+    <button type="button" class="cat" data-cat="Bebida">Bebidas</button>
+    <button type="button" class="cat" data-cat="Combo">Combos</button>
+  </div>
+
+  <!-- LISTA DE PRODUTOS -->
+  <main class="menu-sections" id="listaProdutos">
+    <!-- preenchido via JS -->
+  </main>
+
+  <!-- BARRA CARRINHO -->
+  <div class="barra-carrinho" id="barraCarrinho" style="display:none;">
+    <div class="barra-info">
+      <span id="qtdItens">0 itens</span>
+      <strong id="totalBarra">R$ 0,00</strong>
+    </div>
+    <button type="button" id="btnVerSacola">Ver sacola</button>
+  </div>
+
+  <!-- OVERLAY + DRAWER -->
+  <div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h3>Sacola</h3>
+    <button type="button" id="fecharDrawer">✕</button>
+  </div>
+
+  <!-- TUDO rola junto aqui -->
+  <div class="drawer-scroll" id="drawerScroll">
+    <div class="drawer-body" id="drawerBody">
+      <!-- itens preenchidos pelo JS -->
+    </div>
+
+    <div class="drawer-footer">
+      <div id="premioBox" class="premio-box" style="display:none;"></div>
+
+      <div class="cep-box" id="cepBox">
+        <label>CEP de entrega</label>
+        <div class="cep-linha">
+          <input type="text" id="inputCepPedido" placeholder="00000-000" maxlength="9" inputmode="numeric">
+          <button type="button" class="btn-buscar-cep" id="btnBuscarCep">Buscar</button>
+        </div>
+        <span class="txt-cep-status" id="cepStatus"></span>
+        <div class="endereco-detalhes" id="enderecoDetalhes" style="display:none;">
+          <p class="cep-cidade-info" id="cepCidadeInfo"></p>
+          <div class="campo-end">
+            <label>Rua</label>
+            <input type="text" id="endRua" readonly>
+          </div>
+          <div class="campo-end">
+            <label>Número</label>
+            <input type="text" id="endNumero" placeholder="Nº">
+          </div>
+          <div class="campo-end">
+            <label>Complemento</label>
+            <input type="text" id="endComp" placeholder="Apto, bloco...">
+          </div>
+          <button type="button" class="btn-confirmar-end" id="btnConfirmarEnd">Confirmar endereço</button>
+        </div>
+      </div>
+
+      <div class="frete-opcao" id="freteOpcao">
+        <label class="frete-check">
+          <input type="checkbox" id="chkFreteGratis">
+          <span>Usar frete grátis (acima de R$ 80 · 1x por conta)</span>
+        </label>
+      </div>
+
+      <label for="pagamento">Forma de pagamento</label>
+      <select id="pagamento">
+        <option value="Pix">Pix</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Cartão">Cartão na entrega</option>
+      </select>
+
+      <label for="obs">Observações</label>
+      <input type="text" id="obs" placeholder="Sem cebola, troco para R$ 50...">
+
+      <div class="linha-total">
+        <span>Total</span>
+        <strong id="totalDrawer">R$ 0,00</strong>
+      </div>
+      <button type="button" class="btn-pedir" id="btnFinalizar">Finalizar pedido</button>
+    </div>
+  </div>
+</div>
+
+  <!-- ========== PÁGINA DO PRODUTO (estilo ML) ========== -->
+  <div class="modal-produto-page" id="modalProduto" style="display:none;">
+    <div class="prod-page">
+
+      <header class="prod-page-top">
+        <button type="button" class="btn-voltar-prod" id="btnVoltarProduto" aria-label="Voltar">←</button>
+        <span class="prod-page-top-title">Produto</span>
+        <button type="button" class="btn-fechar-prod-x" id="fecharModalProduto" aria-label="Fechar">✕</button>
+      </header>
+
+      <div class="prod-page-scroll">
+
+        <section class="ml-galeria">
+          <div class="ml-img-principal">
+            <div class="prod-detalhe-foto" id="prodDetalheFoto" data-emoji="🍕" data-nome="">🍕</div>
+            <span class="ml-badge-img">Trattoria</span>
+          </div>
+        </section>
+
+        <section class="ml-info">
+          <p class="ml-condicao">
+            <span id="prodDetalheCat">Pizza</span> · Preparado na hora
+          </p>
+          <div class="ml-tags">
+            <span class="ml-tag-vendido">MAIS PEDIDO</span>
+            <span class="ml-tag-rank">Top na Trattoria</span>
+          </div>
+          <h1 class="ml-titulo" id="prodDetalheNome">Nome do produto</h1>
+          <div class="ml-avaliacao">
+            <span class="ml-estrelas">★★★★★</span>
+            <span class="ml-aval-num">4.9</span>
+            <span class="ml-aval-qtd">(128)</span>
+          </div>
+          <div class="ml-preco-box">
+            <p class="ml-preco" id="prodDetalhePreco">R$ 0,00</p>
+            <p class="ml-parcelas">Pagamento na entrega ou Pix</p>
+          </div>
+          <p class="ml-frete-info">🚚 Frete calculado na sacola · Entrega rápida</p>
+        </section>
+
+        <section class="ml-bloco">
+          <h2>O que você precisa saber sobre este produto</h2>
+          <ul class="ml-lista" id="prodDetalheLista"></ul>
+          <p class="ml-desc-extra" id="prodDetalheDesc"></p>
+        </section>
+
+        <section class="ml-bloco ml-bloco-compra">
+          <h2>Quantidade</h2>
+          <div class="prod-detalhe-qtd ml-qtd">
+            <button type="button" id="prodQtdMenos">−</button>
+            <span id="prodQtdValor">1</span>
+            <button type="button" id="prodQtdMais">+</button>
+            <span class="ml-qtd-hint">unidade(s)</span>
+          </div>
+          <div class="ml-compra-total">
+            <span>Total</span>
+            <strong id="prodDetalheTotal">R$ 0,00</strong>
+          </div>
+          <button type="button" class="btn-add-detalhe btn-ml-carrinho" id="btnAddDetalhe">
+            Adicionar à sacola
+          </button>
+        </section>
+
+        <section class="ml-bloco ml-garantias">
+          <div class="ml-garantia-item">
+            <span>🔄</span>
+            <div>
+              <strong>Troca fácil</strong>
+              <p>Se algo sair errado, fale conosco.</p>
+            </div>
+          </div>
+          <div class="ml-garantia-item">
+            <span>🛡️</span>
+            <div>
+              <strong>Pedido garantido</strong>
+              <p>Receba o que pediu ou resolvemos.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <footer class="prod-page-footer ml-footer">
+        <div class="prod-page-footer-total">
+          <small>Total do item</small>
+          <strong id="prodDetalheTotalFooter">R$ 0,00</strong>
+        </div>
+        <button type="button" class="btn-ml-secundario" id="btnVoltarFooter">Continuar comprando</button>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- MODAL ZOOM -->
+  <div class="modal-zoom" id="modalZoom" style="display:none;">
+    <div class="zoom-conteudo">
+      <button type="button" class="btn-fechar-zoom" id="fecharZoom">✕</button>
+      <div class="zoom-emoji" id="zoomEmoji">🍕</div>
+      <p id="zoomNome"></p>
+    </div>
+  </div>
+
+  <!-- MODAL SABORES (combo 2 pizzas) -->
+  <div class="modal" id="modalSabores" style="display:none;">
+    <div class="modal-box">
+      <h3>Escolha os sabores</h3>
+      <p class="modal-sub">Combo 2 pizzas com 20% off</p>
+      <div class="campo">
+        <label>1ª pizza</label>
+        <select id="sabor1"></select>
+      </div>
+      <div class="campo">
+        <label>2ª pizza</label>
+        <select id="sabor2"></select>
+      </div>
+      <p class="resumo-promo" id="resumoSabores"></p>
+      <div class="modal-btns">
+        <button type="button" id="cancelSabores">Cancelar</button>
+        <button type="button" id="confirmarSabores">Adicionar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PIX -->
+  <!-- MODAL PIX -->
+  <div class="modal" id="modalPix" style="display:none;">
+    <div class="modal-box modal-pix">
+      <h3>Pagamento via Pix</h3>
+      <p class="pix-valor" id="pixValor">R$ 0,00</p>
+      <div class="pix-qr" id="pixQr"></div>
+      <p class="pix-chave-label">Chave</p>
+      <div class="pix-chave-box">
+        <span id="pixChave">edgar5roberto5555@gmail.com</span>
+        <button type="button" id="btnCopiarChave">Copiar</button>
+      </div>
+      <p class="pix-copia-label">Pix Copia e Cola</p>
+      <textarea id="pixCopiaCola" rows="3" readonly></textarea>
+      <button type="button" class="btn-copiar-payload" id="btnCopiarPayload">Copiar código Pix</button>
+      <p class="pix-aviso" id="pixAviso">Após pagar, toque em “Já paguei”.</p>
+      <button type="button" class="btn-pix-verificar" id="btnPixVerificar">Já paguei</button>
+      <button type="button" class="btn-pix-cancelar" id="btnPixCancelar">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- MODAL SUCESSO -->
+  <div class="modal" id="modalSucesso" style="display:none;">
+    <div class="modal-box modal-sucesso">
+      <div class="sucesso-animacao">
+        <svg class="sucesso-circulo" viewBox="0 0 52 52">
+          <circle class="sucesso-check-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="sucesso-check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <h3>Pagamento confirmado!</h3>
+      <p class="sucesso-sub">Seu pedido foi registrado com sucesso.</p>
+      <p class="sucesso-pedido" id="sucessoPedidoId">Pedido #—</p>
+      <p class="sucesso-valor" id="sucessoValor">R$ 0,00</p>
+      <button type="button" class="btn-sucesso-ok" id="btnSucessoOk">Ver meus pedidos</button>
+    </div>
+  </div>
+
+  <!-- MODAL PERFIL -->
+  <div class="modal" id="modalPerfil" style="display:none;">
+    <div class="modal-box">
+      <h3>Meu perfil</h3>
+
+      <div class="foto-perfil-area">
+        <div class="foto-perfil-preview" id="fotoPerfilPreview">👤</div>
+        <label class="btn-foto-perfil">
+          Trocar foto
+          <input type="file" id="inputFotoPerfil" accept="image/*" hidden>
+        </label>
+        <button type="button" class="btn-remover-foto" id="btnRemoverFoto">Remover foto</button>
+      </div>
+
+      <div class="perfil-info">
+        <p id="perfilNomeView">Cliente</p>
+        <p id="perfilTelView">Telefone não informado</p>
+        <p id="perfilEndView">Endereço não informado</p>
+      </div>
+
+      <button type="button" class="btn-editar-perfil" id="btnEditarPerfil">Editar dados</button>
+
+      <div id="formEditar" style="display:none;">
+        <div class="campo">
+          <label>Nome</label>
+          <input type="text" id="pNome">
+        </div>
+        <div class="campo">
+          <label>Telefone</label>
+          <input type="text" id="pTel">
+        </div>
+        <div class="campo">
+          <label>Endereço</label>
+          <input type="text" id="pEnd">
+        </div>
+        <div class="campo">
+          <label>CEP</label>
+          <input type="text" id="pCep" placeholder="00000-000" maxlength="9" inputmode="numeric">
+        </div>
+        <div class="modal-btns">
+          <button type="button" id="cancelEditar">Cancelar</button>
+          <button type="button" id="salvarPerfil">Salvar</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-excluir-conta" id="btnExcluirConta">Excluir minha conta</button>
+      <button type="button" class="btn-sair-perfil" id="btnSairConta">Sair da conta</button>
+      <button type="button" class="btn-fechar-perfil" id="cancelPerfil">Fechar</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button type="button" class="nav-item active" data-page="inicio">
+      <span>🏠</span>
+      <small>Início</small>
+    </button>
+    <button type="button" class="nav-item" data-page="pedidos">
+      <span>📋</span>
+      <small>Pedidos</small>
+    </button>
+    <button type="button" class="nav-item" data-page="perfil">
+      <span>👤</span>
+      <small>Perfil</small>
+    </button>
+  </nav>
+
+  <!-- PÁGINA PEDIDOS -->
+  <section class="page-pedidos" id="pagePedidos">
+    <h2>Meus pedidos</h2>
+    <div id="listaPedidos"></div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="../db.js"></script>
+  <script src="principal.js"></script>
+</body>
+</html>

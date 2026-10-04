@@ -1,0 +1,111 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+.teste{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.italia {
+  min-height: 100vh;
+  background: linear-gradient(90deg, #1f7a3a 0%, #1f7a3a 33.33%, #f5ecd7 33.33%, #f5ecd7 66.66%, #b7302b 66.66%, #b7302b 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container { width: 100%; max-width: 420px; }
+
+.steve-small img {
+  width: 140px;
+  height: 140px;
+  display: block;
+  margin: 0 auto 25px;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+  animation: flutuar 4s ease-in-out infinite;
+}
+
+.card {
+  background: #f5ecd7;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(30,15,5,0.45);
+  text-align: center;
+}
+
+.card h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: #2a1608;
+}
+
+.subtitle {
+  font-style: italic;
+  color: #b7302b;
+  font-size: 19px;
+  margin-bottom: 35px;
+}
+
+.form input {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 2px solid #d4b48c;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 52%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #b7302b;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  background: #b7302b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error {
+  margin-top: 15px;
+  font-weight: bold;
+  min-height: 24px;
+}
+
+.toggle-link {
+  margin-top: 20px;
+  font-size: 15.5px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #b7302b;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-12px) rotate(4deg); }
+}

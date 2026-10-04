@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trattoria Aldini</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@400;700&family=Cormorant+Garamond:ital,wght@400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="splash.css">
+</head>
+<body>
+
+  <div class="italia">
+
+    <div class="splash">
+      <div class="emblema">
+        <!-- Anel decorativo -->
+        <svg class="anel" viewBox="0 0 240 240" aria-hidden="true">
+          <defs>
+            <path id="circulo" d="M120,120 m-105,0 a105,105 0 1,1 210,0 a105,105 0 1,1 -210,0"/>
+          </defs>
+          <circle cx="120" cy="120" r="108" fill="none" stroke="#3b2410" stroke-width="2" opacity="0.4"/>
+          <text font-family="'Cormorant Garamond', serif" font-size="11" fill="#3b2410" letter-spacing="3">
+            <textPath href="#circulo" startOffset="12%">• TRATTORIA ALDINI • DAL 1950 •</textPath>
+          </text>
+        </svg>
+
+        <!-- Steve Pizza -->
+        <img src="steve-pizza.png" alt="Steve Pizza" class="logo">
+
+        <!-- Vapor -->
+        <div class="vapor">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="titulo">
+        <p class="sobre-titulo">— Benvenuti alla —</p>
+        <h1>Trattoria Aldini</h1>
+        <p class="sub-titulo">PIZZAS · BEVANDE</p>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress"></div>
+      </div>
+    </div>
+
+    <button class="skip-btn" id="skipBtn">Pular introdução →</button>
+  </div>
+
+  <script src="splash.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcerias - Trattoria Aldini</title>
+  <link rel="stylesheet" href="parcerias.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img src="steve-pizza.png" alt="Steve" class="steve-icon">
+        <h2>ADM</h2>
+      </div>
+      <nav class="menu">
+        <a href="paineladm.html" class="menu-item">Pro. Vendidos</a>
+        <a href="estoque.html" class="menu-item">Estoque</a>
+        <a href="chegada.html" class="menu-item">Chegada</a>
+        <a href="saida.html" class="menu-item">Saída</a>
+        <a href="ponto.html" class="menu-item">Ponto</a>
+        <a href="vencimento.html" class="menu-item">Vencimento</a>
+        <a href="parcerias.html" class="menu-item active">Parcerias</a>
+        <a href="avaliacoes.html" class="menu-item">Avaliações</a>
+        <a href="funcionarios.html" class="menu-item">Funcionários</a>
+      </nav>
+      <button class="btn-logout" id="logoutBtn">Sair</button>
+    </div>
+
+    <div class="main-content">
+      <header class="topbar">
+        <h1>Parcerias e Contratos</h1>
+        <button id="openModalBtn" class="add-btn">+ Adicionar Contrato</button>
+      </header>
+
+      <div id="alertaVencimento" class="alerta-box" style="display: none;"></div>
+
+      <div class="parcerias-list">
+        <h2>Contratos Ativos e Encerrados</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Parceiro</th>
+              <th>Tipo</th>
+              <th>Início</th>
+              <th>Término</th>
+              <th>Tempo Restante</th>
+              <th>Rendimento</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="parceriasBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Adicionar / Editar -->
+  <div id="parceriaModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitulo">Adicionar Contrato</h3>
+      <form id="parceriaForm">
+        <input type="hidden" id="editIndex">
+
+        <label>Nome do Parceiro:</label>
+        <input type="text" id="nome" placeholder="Ex: Distribuidora Italia" required>
+
+        <label>Tipo de Parceria:</label>
+        <select id="tipo" required>
+          <option value="">Selecione</option>
+          <option value="Fornecedor">Fornecedor</option>
+          <option value="Publicidade">Publicidade</option>
+          <option value="Delivery">Delivery</option>
+          <option value="Eventos">Eventos</option>
+          <option value="Outro">Outro</option>
+        </select>
+
+        <label>Data de Início:</label>
+        <input type="date" id="inicio" required>
+
+        <label>Data de Término:</label>
+        <input type="date" id="termino" required>
+
+        <label>Moeda:</label>
+        <select id="moeda" required>
+          <option value="R$">R$ (Real)</option>
+          <option value="US$">US$ (Dólar)</option>
+          <option value="€">€ (Euro)</option>
+        </select>
+
+        <label>Frequência do Rendimento:</label>
+        <select id="frequencia" required>
+          <option value="Diário">Diário</option>
+          <option value="Mensal" selected>Mensal</option>
+          <option value="Anual">Anual</option>
+        </select>
+
+        <label>Valor do Rendimento:</label>
+        <input type="number" id="rendimento" placeholder="Ex: 5000" step="0.01" min="0" required>
+
+        <label>Contato:</label>
+        <input type="text" id="contato" placeholder="Telefone ou email">
+
+        <label>Observação:</label>
+        <input type="text" id="observacao" placeholder="Detalhes do contrato">
+
+        <div class="modal-buttons">
+          <button type="button" id="cancelModalBtn">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Renovar -->
+  <div id="renovarModal" class="modal">
+    <div class="modal-content">
+      <h3>Renovar Contrato</h3>
+      <p id="renovarInfo" style="margin-bottom: 15px; color: #2a1608;"></p>
+
+      <label>Novo valor pedido na renovação:</label>
+      <input type="number" id="novoValor" step="0.01" min="0" required>
+
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
+        Quanto maior o valor pedido, maior a chance de cair <strong>1</strong> (aceito).<br>
+        Quanto menor que o valor original, menor a chance de cair <strong>1</strong>.
+      </p>
+
+      <div class="modal-buttons">
+        <button type="button" id="cancelRenovarBtn">Cancelar</button>
+        <button type="button" id="confirmarRenovarBtn">Sortear Renovação</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="parcerias.js"></script>
+</body>
+</html>

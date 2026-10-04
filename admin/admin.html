@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel ADM - Trattoria Aldini</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="italia">
+         
+    <div class="admin-container">
+      <div class="steve-small">
+        <img src="steve-pizza.png" alt="Steve Pizza">
+      </div>
+
+      <div class="card">
+        <h1>Bem-vindo, Administrador</h1>
+        <p class="subtitle">O que deseja acessar?</p>
+
+        <div class="admin-options">
+          <a href="/Clientes/Principal.html" class="admin-btn">
+            <strong>Área dos Clientes</strong>
+            <span>Gerenciar pedidos, cadastros e entregas</span>
+          </a>
+          
+          <a href="paineladm.html" class="admin-btn">
+            <strong>Painel ADM</strong>
+            <span>Cardápio, estoque, relatórios e configurações</span>
+          </a>
+        </div>
+
+        <button class="btn-logout" id="logoutBtn">Sair</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pop-up de Confirmação -->
+  <div id="logoutModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Deseja realmente sair?</h3>
+      <p>Você será redirecionado para a tela de login.</p>
+      
+      <div class="modal-buttons">
+        <button id="cancelBtn" class="btn-cancel">Cancelar</button>
+        <button id="confirmBtn" class="btn-confirm">Sim, Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+<script src="../db.js"></script>   <!-- ajuste o caminho se necessário -->
+
+</body>
+</html>
