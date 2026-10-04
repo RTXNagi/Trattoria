@@ -1,12 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-
-.teste{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .italia {
   min-height: 100vh;
   background: linear-gradient(90deg, #1f7a3a 0%, #1f7a3a 33.33%, #f5ecd7 33.33%, #f5ecd7 66.66%, #b7302b 66.66%, #b7302b 100%);
