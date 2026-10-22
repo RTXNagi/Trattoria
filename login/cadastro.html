@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro - Trattoria Aldini</title>
+  <title>Cadastrar - Trattoria Aldini</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="cadastro.css">
 </head>
 <body>
   <div class="italia">
-
     <div class="login-container">
       <div class="steve-small">
         <img src="steve-pizza.png" alt="Steve Pizza">
@@ -18,36 +22,66 @@
         <h1>Trattoria Aldini</h1>
         <p class="subtitle">Crie sua conta</p>
 
-        <form id="cadastroForm" class="form">
-          <input type="text" id="nome" placeholder="Nome completo" required>
-          <input type="email" id="email" placeholder="Email" required>
-          
+        <form id="registerForm" class="form">
+          <input type="text" id="regName" placeholder="Nome completo" required>
+          <input type="email" id="regEmail" placeholder="Email" required>
+          <input type="text" id="regTel" placeholder="Telefone" required>
+
           <div class="password-group">
-            <input type="password" id="senha" placeholder="Senha" required>
-            <button type="button" id="toggleSenha" class="toggle-password">👁️</button>
+            <input type="password" id="regPass" placeholder="Senha" required>
+            <button type="button" class="toggle-password" data-target="regPass" aria-label="Mostrar senha">
+              <i data-lucide="eye"></i>
+            </button>
           </div>
-          
+
           <div class="password-group">
-            <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required>
-            <button type="button" id="toggleConfirmarSenha" class="toggle-password">👁️</button>
+            <input type="password" id="regPassConfirm" placeholder="Confirmar senha" required>
+            <button type="button" class="toggle-password" data-target="regPassConfirm" aria-label="Mostrar senha">
+              <i data-lucide="eye"></i>
+            </button>
           </div>
-          
+
           <button type="submit" class="btn">Cadastrar</button>
         </form>
 
-        <p id="errorMessage" class="error"></p>
+        <p id="registerError" class="error"></p>
 
         <div class="toggle-link">
           <span>Já tem conta?</span>
-          <button id="loginBtn" class="link-btn">Entrar</button>
+          <button type="button" id="goLoginBtn" class="link-btn">Entrar</button>
         </div>
       </div>
     </div>
-
   </div>
-  <script src="cadastro.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
-<script src="../db.js"></script>   <!-- ajuste o caminho se necessário -->
 
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="cadastro.js"></script>
+  <script>
+    lucide.createIcons();
+
+    document.querySelectorAll('.toggle-password').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const input = targetId
+          ? document.getElementById(targetId)
+          : btn.parentElement.querySelector('input');
+
+        if (!input) return;
+
+        const mostrando = input.type === 'text';
+        input.type = mostrando ? 'password' : 'text';
+        btn.innerHTML = mostrando
+          ? '<i data-lucide="eye"></i>'
+          : '<i data-lucide="eye-off"></i>';
+        lucide.createIcons();
+      });
+    });
+
+    document.getElementById('goLoginBtn')?.addEventListener('click', () => {
+      window.location.href = 'login.html';
+    });
+  </script>
 </body>
 </html>

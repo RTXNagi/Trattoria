@@ -1,14 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Entrar - Trattoria Aldini</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
   <div class="italia">
-
     <div class="login-container">
       <div class="steve-small">
         <img src="steve-pizza.png" alt="Steve Pizza">
@@ -18,30 +23,36 @@
         <h1>Trattoria Aldini</h1>
         <p class="subtitle">Benvenuti</p>
 
-        <form id="loginForm" class="form">
-          <input type="text" id="username" placeholder="Usuário ou Email" required>
-          
+        <form id="loginForm" class="form" autocomplete="on">
+          <input type="text" id="username" name="username" placeholder="Usuário ou Email" required autocomplete="username">
+
           <div class="password-group">
-            <input type="password" id="password" placeholder="Senha" required>
-            <button type="button" id="togglePassword" class="toggle-password">👁️</button>
+            <input type="password" id="password" name="password" placeholder="Senha" required autocomplete="current-password">
+            <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar senha">
+              <i data-lucide="eye"></i>
+            </button>
           </div>
-          
-          <button type="submit" class="btn">Entrar</button>
+
+          <button type="submit" class="btn" id="btnEntrar">Entrar</button>
         </form>
 
         <p id="errorMessage" class="error"></p>
 
         <div class="toggle-link">
           <span>Não tem conta?</span>
-          <button id="toggleBtn" class="link-btn">Cadastrar</button>
+          <button type="button" id="toggleBtn" class="link-btn">Cadastrar</button>
         </div>
       </div>
     </div>
-
   </div>
 
-<script src="login.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
-<script src="../db.js"></script>   <!-- ajuste o caminho se necessário -->
+  <!-- Lucide -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- sql.js (banco) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <!-- Banco local -->
+  <script src="../db.js"></script>
+  <!-- Login -->
+  <script src="login.js"></script>
 </body>
 </html>

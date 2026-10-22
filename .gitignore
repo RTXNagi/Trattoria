@@ -1,4 +1,7 @@
------------Coisa pra Fazer---------.txt
+.vscode/
+node_modules/
+.env
+*.log
 
-.vscode
-node_modules
+package.json
+pnpm-lock.yaml
