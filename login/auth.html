@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar · Cadastrar - Trattoria Aldini</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <div class="italia">
+    <div class="auth-box">
+
+      <div class="steve-small">
+        <img src="steve-pizza.png" alt="Steve Pizza">
+      </div>
+
+      <h1>Trattoria Aldini</h1>
+      <p class="subtitle">Benvenuti</p>
+
+      <div class="tabs">
+        <button type="button" class="tab active" data-tab="login">Entrar</button>
+        <button type="button" class="tab" data-tab="cadastro">Cadastrar</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="panel active">
+        <input type="text" id="username" placeholder="Usuário ou Email" required>
+        <div class="password-group">
+          <input type="password" id="password" placeholder="Senha" required>
+          <button type="button" class="toggle-password" data-target="password" aria-label="Mostrar senha">
+            <i data-lucide="eye"></i>
+          </button>
+        </div>
+        <button type="submit" class="btn">Entrar</button>
+        <p id="loginError" class="error"></p>
+      </form>
+
+      <!-- CADASTRO -->
+      <form id="registerForm" class="panel">
+        <input type="text" id="regName" placeholder="Nome completo" required>
+        <input type="email" id="regEmail" placeholder="Email" required>
+        <input type="text" id="regTel" placeholder="Telefone">
+        <div class="password-group">
+          <input type="password" id="regPass" placeholder="Senha" required>
+          <button type="button" class="toggle-password" data-target="regPass" aria-label="Mostrar senha">
+            <i data-lucide="eye"></i>
+          </button>
+        </div>
+        <div class="password-group">
+          <input type="password" id="regPassConfirm" placeholder="Confirmar senha" required>
+          <button type="button" class="toggle-password" data-target="regPassConfirm" aria-label="Mostrar senha">
+            <i data-lucide="eye"></i>
+          </button>
+        </div>
+        <button type="submit" class="btn">Cadastrar</button>
+        <p id="registerError" class="error"></p>
+      </form>
+
+      <div class="divisor">
+        <span>ou continue com</span>
+      </div>
+
+      <!-- Sociais: visíveis, mas ainda não ativos -->
+      <div class="social-main">
+        <button type="button" class="social-btn google" data-provider="google" title="Em breve">
+          <span class="icon-wrap">
+            <svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/>
+              <path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.800l7.9-6.100z"/>
+              <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.800l-7.6-5.900c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.800l-7.9 6.100C6.5 42.6 14.6 48 24 48z"/>
+            </svg>
+          </span>
+          <span class="social-name">Google</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+
+        <button type="button" class="social-btn facebook" data-provider="facebook" title="Em breve">
+          <span class="icon-wrap">
+            <svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#1877F2"/>
+              <path fill="#fff" d="M33.3 30.9l1.1-6.900h-6.600v-4.500c0-1.9.9-3.7 3.9-3.700h3v-5.900s-2.7-.5-5.3-.5c-5.4 0-8.9 3.3-8.9 9.200V24h-6v6.900h6V48h7.400V30.900h5.400z"/>
+            </svg>
+          </span>
+          <span class="social-name">Facebook</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+
+        <button type="button" class="social-btn apple" data-provider="apple" title="Em breve">
+          <span class="icon-wrap">
+            <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#111" d="M16.4 12.600c0-2.4 2-3.5 2.1-3.6-1.2-1.7-3-1.9-3.6-1.9-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.8c-1.7 0-3.3 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.3-.1 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.4-.9-2.4-3.500zM14 5.300c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.1-.5 2.8-1.500z"/>
+            </svg>
+          </span>
+          <span class="social-name">Apple</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+      </div>
+
+      <button type="button" class="outros-btn" id="outrosBtn">
+        Outros <i data-lucide="chevron-down"></i>
+      </button>
+      <div class="social-outros" id="socialOutros">
+        <button type="button" class="social-btn mini" data-provider="github" title="Em breve">
+          <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#181717" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.3 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.200a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.200v3.300c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/>
+          </svg>
+          <span class="social-name">GitHub</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+
+        <button type="button" class="social-btn mini" data-provider="twitter" title="Em breve">
+          <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#000" d="M18.2 2.200h3.300l-7.2 8.3 8.5 11.300h-6.700l-5.2-6.8-6 6.800H1.600l7.7-8.800L1.2 2.200H8l4.7 6.2 5.5-6.200zm-1.2 17.600h1.800L7 4.100H5.100l11.9 15.700z"/>
+          </svg>
+          <span class="social-name">X</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+
+        <button type="button" class="social-btn mini" data-provider="microsoft" title="Em breve">
+          <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="2" width="9.5" height="9.5" fill="#F25022"/>
+            <rect x="12.5" y="2" width="9.5" height="9.5" fill="#7FBA00"/>
+            <rect x="2" y="12.5" width="9.5" height="9.5" fill="#00A4EF"/>
+            <rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#FFB900"/>
+          </svg>
+          <span class="social-name">Microsoft</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+
+        <button type="button" class="social-btn mini" data-provider="email" title="Em breve">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="#b7302b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="3"/>
+            <path d="m22 7-10 6L2 7"/>
+          </svg>
+          <span class="social-name">Email</span>
+          <small class="em-breve">Em breve</small>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="../db.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #1f7a3a 0%, #1f7a3a 33.33%, #f5ecd7 33.33%, #f5ecd7 66.66%, #b7302b 66.66%, #b7302b 100%);
+}
+
+.sidebar {
+  width: 260px;
+  background: #2a1608;
+  color: #f5ecd7;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 30px;
+  border-bottom: 1px solid rgba(245, 236, 215, 0.2);
+}
+
+.steve-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.sidebar-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+}
+
+.menu {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.menu-item {
+  display: block;
+  padding: 14px 25px;
+  color: #f5ecd7;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: #b7302b;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #f5ecd7;
+  overflow-x: auto;
+}
+
+.topbar h1 {
+  font-family: 'Playfair Display', serif;
+  color: #2a1608;
+  margin-bottom: 25px;
+}
+
+.avaliacoes-list {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+.avaliacoes-list h2 {
+  margin-bottom: 20px;
+  color: #b7302b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f5ecd7;
+  color: #2a1608;
+  font-weight: bold;
+}
+
+.estrelas {
+  color: #e0a800;
+  font-weight: bold;
+}
+
+.delete-btn {
+  background: #8a1e1e;
+  color: white;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background: #6b1515;
+}
+
+.btn-logout {
+  margin: 20px;
+  padding: 14px;
+  background: #b7302b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-logout:hover {
+  background: #8a1e1e;
+}
+
+/* Responsivo para celulares */
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+    background: #2a1608;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .main-content {
+    padding: 15px;
+  }
+}

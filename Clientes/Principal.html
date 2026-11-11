@@ -90,70 +90,70 @@
 
   <!-- OVERLAY + DRAWER -->
   <div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <h3>Sacola</h3>
-    <button type="button" id="fecharDrawer">✕</button>
-  </div>
-
-  <!-- TUDO rola junto aqui -->
-  <div class="drawer-scroll" id="drawerScroll">
-    <div class="drawer-body" id="drawerBody">
-      <!-- itens preenchidos pelo JS -->
+    <div class="drawer-header">
+      <h3>Sacola</h3>
+      <button type="button" id="fecharDrawer">✕</button>
     </div>
 
-    <div class="drawer-footer">
-      <div id="premioBox" class="premio-box" style="display:none;"></div>
+    <!-- TUDO rola junto aqui -->
+    <div class="drawer-scroll" id="drawerScroll">
+      <div class="drawer-body" id="drawerBody">
+        <!-- itens preenchidos pelo JS -->
+      </div>
 
-      <div class="cep-box" id="cepBox">
-        <label>CEP de entrega</label>
-        <div class="cep-linha">
-          <input type="text" id="inputCepPedido" placeholder="00000-000" maxlength="9" inputmode="numeric">
-          <button type="button" class="btn-buscar-cep" id="btnBuscarCep">Buscar</button>
+      <div class="drawer-footer">
+        <div id="premioBox" class="premio-box" style="display:none;"></div>
+
+        <div class="cep-box" id="cepBox">
+          <label>CEP de entrega</label>
+          <div class="cep-linha">
+            <input type="text" id="inputCepPedido" placeholder="00000-000" maxlength="9" inputmode="numeric">
+            <button type="button" class="btn-buscar-cep" id="btnBuscarCep">Buscar</button>
+          </div>
+          <span class="txt-cep-status" id="cepStatus"></span>
+          <div class="endereco-detalhes" id="enderecoDetalhes" style="display:none;">
+            <p class="cep-cidade-info" id="cepCidadeInfo"></p>
+            <div class="campo-end">
+              <label>Rua</label>
+              <input type="text" id="endRua" readonly>
+            </div>
+            <div class="campo-end">
+              <label>Número</label>
+              <input type="text" id="endNumero" placeholder="Nº">
+            </div>
+            <div class="campo-end">
+              <label>Complemento</label>
+              <input type="text" id="endComp" placeholder="Apto, bloco...">
+            </div>
+            <button type="button" class="btn-confirmar-end" id="btnConfirmarEnd">Confirmar endereço</button>
+          </div>
         </div>
-        <span class="txt-cep-status" id="cepStatus"></span>
-        <div class="endereco-detalhes" id="enderecoDetalhes" style="display:none;">
-          <p class="cep-cidade-info" id="cepCidadeInfo"></p>
-          <div class="campo-end">
-            <label>Rua</label>
-            <input type="text" id="endRua" readonly>
-          </div>
-          <div class="campo-end">
-            <label>Número</label>
-            <input type="text" id="endNumero" placeholder="Nº">
-          </div>
-          <div class="campo-end">
-            <label>Complemento</label>
-            <input type="text" id="endComp" placeholder="Apto, bloco...">
-          </div>
-          <button type="button" class="btn-confirmar-end" id="btnConfirmarEnd">Confirmar endereço</button>
+
+        <div class="frete-opcao" id="freteOpcao">
+          <label class="frete-check">
+            <input type="checkbox" id="chkFreteGratis">
+            <span>Usar frete grátis (acima de R$ 80 · 1x por conta)</span>
+          </label>
         </div>
+
+        <label for="pagamento">Forma de pagamento</label>
+        <select id="pagamento">
+          <option value="Pix">Pix</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão">Cartão na entrega</option>
+        </select>
+
+        <label for="obs">Observações</label>
+        <input type="text" id="obs" placeholder="Sem cebola, troco para R$ 50...">
+
+        <div class="linha-total">
+          <span>Total</span>
+          <strong id="totalDrawer">R$ 0,00</strong>
+        </div>
+        <button type="button" class="btn-pedir" id="btnFinalizar">Finalizar pedido</button>
       </div>
-
-      <div class="frete-opcao" id="freteOpcao">
-        <label class="frete-check">
-          <input type="checkbox" id="chkFreteGratis">
-          <span>Usar frete grátis (acima de R$ 80 · 1x por conta)</span>
-        </label>
-      </div>
-
-      <label for="pagamento">Forma de pagamento</label>
-      <select id="pagamento">
-        <option value="Pix">Pix</option>
-        <option value="Dinheiro">Dinheiro</option>
-        <option value="Cartão">Cartão na entrega</option>
-      </select>
-
-      <label for="obs">Observações</label>
-      <input type="text" id="obs" placeholder="Sem cebola, troco para R$ 50...">
-
-      <div class="linha-total">
-        <span>Total</span>
-        <strong id="totalDrawer">R$ 0,00</strong>
-      </div>
-      <button type="button" class="btn-pedir" id="btnFinalizar">Finalizar pedido</button>
     </div>
   </div>
-</div>
 
   <!-- ========== PÁGINA DO PRODUTO (estilo ML) ========== -->
   <div class="modal-produto-page" id="modalProduto" style="display:none;">
@@ -218,6 +218,24 @@
           </button>
         </section>
 
+        <!-- Bloco de Avaliação do Produto -->
+        <section class="ml-bloco">
+          <h2>Avaliar este produto</h2>
+          <div class="campo-avaliacao" style="display:flex; flex-direction:column; gap:8px;">
+            <label style="font-size:13px; font-weight:600; color:#555;">Sua Nota (1 a 5 estrelas):</label>
+            <select id="notaProdutoInput" style="padding:10px; border-radius:8px; border:1px solid #ddd; font-family:inherit;">
+              <option value="5">⭐⭐⭐⭐⭐ (5 - Excelente)</option>
+              <option value="4">⭐⭐⭐⭐ (4 - Muito bom)</option>
+              <option value="3">⭐⭐⭐ (3 - Bom)</option>
+              <option value="2">⭐⭐ (2 - Regular)</option>
+              <option value="1">⭐ (1 - Ruim)</option>
+            </select>
+            <label style="font-size:13px; font-weight:600; color:#555; margin-top:6px;">Seu comentário:</label>
+            <textarea id="comentarioProdutoInput" placeholder="O que achou deste item?" rows="2" style="padding:10px; border-radius:8px; border:1px solid #ddd; font-family:inherit; resize:none;"></textarea>
+            <button type="button" id="btnEnviarAvaliacao" style="margin-top:8px; padding:12px; background:#1f7a3a; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-family:inherit;">Enviar Avaliação</button>
+          </div>
+        </section>
+
         <section class="ml-bloco ml-garantias">
           <div class="ml-garantia-item">
             <span>🔄</span>
@@ -278,7 +296,6 @@
     </div>
   </div>
 
-  <!-- MODAL PIX -->
   <!-- MODAL PIX -->
   <div class="modal" id="modalPix" style="display:none;">
     <div class="modal-box modal-pix">

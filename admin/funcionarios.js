@@ -231,6 +231,6 @@ function apagarFuncionario(id) {
 // ====================== LOGOUT ======================
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
   if (confirm('Deseja realmente sair?')) {
-    window.location.href = '../login/login.html';
+     window.location.href = '../login/auth.html';
   }
 });

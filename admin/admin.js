@@ -12,5 +12,5 @@ cancelBtn.addEventListener('click', () => {
 });
 
 confirmBtn.addEventListener('click', () => {
-  window.location.href = "../login/login.html";
+   window.location.href = '../login/auth.html';
 });

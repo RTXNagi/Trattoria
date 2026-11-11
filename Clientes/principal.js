@@ -124,12 +124,12 @@ function limparCarrinhoSalvo() {
 
 function irParaLogin() {
   salvarCarrinho();
-  window.location.href = '../login/login.html';
+  window.location.href = '../login/auth.html';
 }
 
 function irParaCadastro() {
   salvarCarrinho();
-  window.location.href = '../login/cadastro.html';
+  window.location.href = '../login/auth.html#cadastro';
 }
 
 function setupUI() {
@@ -220,7 +220,6 @@ function setupUI() {
   document.getElementById('btnBuscarCep')?.addEventListener('click', buscarCepPedido);
   document.getElementById('inputCepPedido')?.addEventListener('input', (e) => {
     e.target.value = formatarCep(e.target.value);
-    // Se mudar o CEP, esconde detalhes até buscar de novo
     const det = document.getElementById('enderecoDetalhes');
     if (det) det.style.display = 'none';
     dadosCepAtual = null;
@@ -253,7 +252,7 @@ function setupUI() {
     if (confirm('Deseja sair da conta?')) {
       salvarCarrinho();
       localStorage.removeItem('cliente_logado');
-      window.location.href = '../login/login.html';
+      window.location.href = '../login/auth.html';
     }
   });
 
@@ -283,7 +282,6 @@ function setupUI() {
 
   document.getElementById('btnSucessoOk')?.addEventListener('click', () => {
     document.getElementById('modalSucesso').style.display = 'none';
-    // Após sucesso (dinheiro/cartão/pix), ir para Meus pedidos
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     const btnPedidos = document.querySelector('.nav-item[data-page="pedidos"]');
     if (btnPedidos) btnPedidos.classList.add('active');
@@ -304,6 +302,31 @@ function setupUI() {
   document.getElementById('prodQtdMais')?.addEventListener('click', () => {
     qtdDetalhe++;
     atualizarDetalheQtd();
+  });
+
+  // Enviar Avaliação do Produto
+  document.getElementById('btnEnviarAvaliacao')?.addEventListener('click', () => {
+    if (!produtoDetalheAtual) return;
+    const nota = parseInt(document.getElementById('notaProdutoInput')?.value) || 5;
+    const comentarioInput = document.getElementById('comentarioProdutoInput');
+    const comentario = (comentarioInput?.value || '').trim();
+    const nomeCliente = clienteLogado?.nome || 'Cliente Anônimo';
+    const dataHoje = new Date().toISOString().slice(0, 10);
+
+    if (!verificarBanco()) return;
+
+    try {
+      db.run(
+        `INSERT INTO avaliacoes (cliente, nota, comentario, data) VALUES (?, ?, ?, ?)`,
+        [`${nomeCliente} (Produto: ${produtoDetalheAtual.nome})`, nota, comentario, dataHoje]
+      );
+      salvarBanco();
+      alert('⭐ Obrigado! Sua avaliação foi enviada com sucesso.');
+      if (comentarioInput) comentarioInput.value = '';
+    } catch (e) {
+      console.error(e);
+      alert('Erro ao salvar avaliação.');
+    }
   });
 
   document.getElementById('fecharZoom')?.addEventListener('click', fecharZoom);
@@ -329,7 +352,6 @@ function setupUI() {
   });
 }
 
-/* ====================== EXCLUIR CONTA ====================== */
 function excluirConta() {
   if (!clienteLogado) return;
 
@@ -349,8 +371,6 @@ function excluirConta() {
     if (clienteLogado.id && typeof verificarBanco === 'function' && verificarBanco()) {
       try {
         db.run(`DELETE FROM clientes WHERE id = ?`, [clienteLogado.id]);
-        // Opcional: não apaga pedidos históricos do restaurante, só desassocia
-        // db.run(`UPDATE pedidos SET id_cliente = NULL WHERE id_cliente = ?`, [clienteLogado.id]);
         if (typeof salvarBanco === 'function') salvarBanco();
       } catch (e) {
         console.error('Erro ao excluir do banco:', e);
@@ -366,10 +386,9 @@ function excluirConta() {
   clienteLogado = null;
 
   alert('Sua conta foi excluída com sucesso.');
-  window.location.href = '../login/login.html';
+  window.location.href = '../login/auth.html';
 }
 
-/* ====================== CARROSSEL PROMOÇÕES ====================== */
 function setupCarrossel() {
   const carrossel =
     document.getElementById('carrosselPromos') ||
@@ -524,7 +543,6 @@ function ativarArraste(el) {
   });
 }
 
-/* ====================== CEP / ENDEREÇO ====================== */
 function formatarCep(v) {
   const d = String(v || '').replace(/\D/g, '').slice(0, 8);
   if (d.length <= 5) return d;
@@ -541,7 +559,6 @@ function temEnderecoOuCep() {
   return false;
 }
 
-/** Busca CEP na API ViaCEP e abre formulário de endereço */
 function elCepStatus() {
   return document.getElementById('txtCepStatus') || document.getElementById('cepStatus');
 }
@@ -652,7 +669,6 @@ async function buscarCepPedido() {
 
     if (detalhes) detalhes.style.display = 'block';
 
-    // Já define CEP encontrado (ainda precisa número/confirm)
     cepEntrega = raw;
 
     if (status) {
@@ -682,7 +698,6 @@ async function buscarCepPedido() {
   }
 }
 
-/** Confirma rua + número e libera o frete. silent=true não mostra alert nem re-render agressivo */
 function confirmarEnderecoCompleto(silent = false) {
   if (!dadosCepAtual) {
     if (!silent) alert('Busque um CEP primeiro.');
@@ -783,16 +798,14 @@ function atualizarUiCep() {
   }
 }
 
-/* ====================== FRETE ====================== */
 function calcularSubtotal() {
   let total = carrinho.reduce((s, i) => s + i.preco * i.qtd, 0);
   if (descontoAtivo > 0) total = total * (1 - descontoAtivo);
   return total;
 }
 
-/** Frete só é cobrado se houver endereço ou CEP; valor fixo R$ 5,13 (ou grátis se elegível) */
 function calcularFrete(subtotal) {
-  if (!temEnderecoOuCep()) return null; // ainda não definido
+  if (!temEnderecoOuCep()) return null;
   if (freteGratis && subtotal >= MINIMO_FRETE_GRATIS) return 0;
   return FRETE_FIXO;
 }
@@ -800,7 +813,7 @@ function calcularFrete(subtotal) {
 function calcularTotal() {
   const subtotal = calcularSubtotal();
   const frete = calcularFrete(subtotal);
-  if (frete === null) return subtotal; // sem frete até ter CEP/endereço
+  if (frete === null) return subtotal;
   return subtotal + frete;
 }
 
@@ -850,7 +863,6 @@ function textoFrete() {
   return 'Frete: R$ ' + FRETE_FIXO.toFixed(2).replace('.', ',');
 }
 
-/* ====================== PIX ====================== */
 function crc16(str) {
   let crc = 0xFFFF;
   for (let i = 0; i < str.length; i++) {
@@ -890,7 +902,6 @@ function gerarPayloadPix(valor) {
 
 function mostrarPix(valor, dadosPendentes) {
   const modal = document.getElementById('modalPix');
-  // Se o HTML não tiver o modal Pix, confirma na hora (não quebra o fluxo)
   if (!modal) {
     const ok = confirm(
       'Pagamento Pix — R$ ' + Number(valor).toFixed(2).replace('.', ',') +
@@ -955,11 +966,6 @@ function mostrarPix(valor, dadosPendentes) {
   modal.style.display = 'flex';
 }
 
-/**
- * Verificação de Pix no front-end puro é simulada.
- * Em produção, integre webhook/API do banco ou PSP (Mercado Pago, etc.).
- * Só salva o pedido depois da confirmação.
- */
 async function verificarPagamentoPix() {
   if (!pedidoPixPendente) {
     alert('Nenhum pagamento Pix pendente.');
@@ -1034,7 +1040,6 @@ function mostrarSucessoPagamento(idPedido, valor) {
   if (modal) modal.style.display = 'flex';
 }
 
-/* ====================== FOTO DE PERFIL ====================== */
 function aplicarFotoPerfilNaTela() {
   const foto = clienteLogado?.foto || null;
 
@@ -1138,7 +1143,6 @@ function removerFotoPerfil() {
   aplicarFotoPerfilNaTela();
 }
 
-/* ====================== 2 SABORES (-20%) ====================== */
 function abrirEscolhaSabores() {
   const pizzas = produtos.filter(p => p.categoria === 'Pizza');
   if (pizzas.length < 2) {
@@ -1223,10 +1227,8 @@ function addCombo(index) {
   atualizarBarra();
 }
 
-/* ====================== PRODUTOS ====================== */
 function carregarProdutos() {
   if (typeof verificarBanco === 'function' && !verificarBanco()) {
-    // continua com fallback
   }
 
   produtos = [];
@@ -1311,7 +1313,6 @@ function renderProdutos(categoria, busca = '') {
     lista = lista.filter(p => p.nome.toLowerCase().includes(q));
   }
 
-  // ===== BUSCA: lista vertical =====
   if (busca && busca.trim()) {
     container.innerHTML = `
       <div class="lista-vertical">
@@ -1327,7 +1328,6 @@ function renderProdutos(categoria, busca = '') {
     return;
   }
 
-  // ===== TODOS: carrossel horizontal (~5 visíveis + setas) =====
   if (categoria === 'todos') {
     function montarSecaoLinha(titulo, itens, id) {
       if (!itens.length) return '';
@@ -1366,7 +1366,6 @@ function renderProdutos(categoria, busca = '') {
     return;
   }
 
-  // ===== CATEGORIA ESPECÍFICA (Salgadas, Doces...): um embaixo do outro =====
   container.innerHTML = `
     <div class="lista-vertical">
       <h2 class="secao-titulo">${tituloSecao(categoria)}</h2>
@@ -1383,7 +1382,6 @@ function renderProdutos(categoria, busca = '') {
 function moverCarrossel(id, direcao) {
   const el = document.getElementById(id);
   if (!el) return;
-  // Avança ~5 cards (uma "página") por clique na seta
   const card = el.querySelector('.produto-circulo');
   const umCard = card ? card.offsetWidth + 14 : 164;
   const passo = umCard * MAX_PRODUTOS_SECAO;
@@ -1415,7 +1413,6 @@ function cardLinha(p) {
   `;
 }
 
-/* ====================== DETALHE DO PRODUTO (estilo loja / ML) ====================== */
 function atualizarDetalheQtd() {
   const el = document.getElementById('prodQtdValor');
   if (el) el.textContent = qtdDetalhe;
@@ -1499,7 +1496,6 @@ function adicionarDoDetalhe() {
   salvarCarrinho();
   atualizarBarra();
   fecharModalProduto();
-  // Feedback leve (sem alert)
   const barra = document.getElementById('barraCarrinho');
   if (barra) {
     barra.style.display = 'flex';
@@ -1518,13 +1514,11 @@ function addItem(id) {
   atualizarBarra();
 }
 
-/* ====================== EXPANDIR IMAGEM (hover / long press) ====================== */
 function ativarExpandirImagens() {
   document.querySelectorAll('.foto, .foto-mini, .prod-detalhe-foto').forEach(el => {
     if (el.dataset.zoomReady) return;
     el.dataset.zoomReady = '1';
 
-    // Desktop: hover
     el.addEventListener('mouseenter', () => {
       el.classList.add('expandido');
     });
@@ -1532,7 +1526,6 @@ function ativarExpandirImagens() {
       el.classList.remove('expandido');
     });
 
-    // Clique longo / toque longo para zoom completo
     let pressTimer = null;
     const startPress = (e) => {
       pressTimer = setTimeout(() => {
@@ -1555,7 +1548,6 @@ function ativarExpandirImagens() {
     el.addEventListener('touchend', cancelPress);
     el.addEventListener('touchcancel', cancelPress);
 
-    // Duplo clique / double tap também abre zoom
     el.addEventListener('dblclick', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -1592,7 +1584,6 @@ function atualizarBarra() {
   const totalQtd = carrinho.reduce((s, i) => s + i.qtd, 0);
   const total = calcularTotal();
 
-  // Badge no topo
   if (badge) {
     if (totalQtd > 0) {
       badge.style.display = 'flex';
@@ -1699,7 +1690,6 @@ function finalizarPedido() {
       return;
     }
 
-    // Confirma endereço em silêncio se já tiver rua + número
     if (!temEnderecoOuCep() && dadosCepAtual && !dadosCepAtual.confirmado) {
       const num = (elNumeroPedido()?.value || '').trim();
       const rua = (elRuaPedido()?.value || dadosCepAtual.logradouro || '').trim();
@@ -1747,14 +1737,12 @@ function finalizarPedido() {
       usarFreteGratis: freteGratis && frete === 0
     };
 
-    // Pix
     if (forma === 'Pix') {
       fecharDrawer();
       setTimeout(() => mostrarPix(total, dados), 50);
       return;
     }
 
-    // Dinheiro / Cartão
     const idPedido = salvarPedidoConfirmado(dados, forma, 'Aguardando');
     if (!idPedido) {
       alert('Não foi possível registrar o pedido. Tente de novo.');
@@ -1767,7 +1755,6 @@ function finalizarPedido() {
   }
 }
 
-/** Persiste pedido + pagamento e limpa a sacola */
 function salvarPedidoConfirmado(dados, forma, statusPagamento) {
   const { idCliente, total, data, usarFreteGratis, itens } = dados;
 
@@ -1814,7 +1801,7 @@ function salvarPedidoConfirmado(dados, forma, statusPagamento) {
           `INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES (?,?,?,?)`,
           [idPedido, item.id || null, item.qtd || 1, item.preco || 0]
         );
-      } catch (e) { /* schema diferente */ }
+      } catch (e) { }
     });
   }
 
