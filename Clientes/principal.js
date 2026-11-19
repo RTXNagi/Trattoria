@@ -32,6 +32,7 @@ const DESCRICOES = {
   8: 'Bacon crocante com mussarela. Sabor marcante e irresistível.',
   9: 'Carne seca desfiada, cebola roxa e cream cheese. Especialidade nordestina.',
   10: 'Calabresa, pimenta, ovo e cebola. Receita baiana autêntica.',
+  11: 'Pizza de teste por apenas 1 centavo. Ideal para validar pedidos e pagamentos.',
   30: 'Chocolate ao leite e morangos frescos. Sobremesa perfeita para dividir.',
   31: 'Nutella generosa com leite ninho. Doce intenso e cremoso.',
   32: 'Goiabada e queijo minas. O clássico Romeu e Julieta em versão pizza.',
@@ -334,17 +335,34 @@ function setupUI() {
     if (e.target.id === 'modalZoom') fecharZoom();
   });
 
+  let intervaloPedidos = null;
+
   document.querySelectorAll('.nav-item').forEach(btn => {
     btn.addEventListener('click', () => {
       const page = btn.dataset.page;
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
+      if (intervaloPedidos) {
+        clearInterval(intervaloPedidos);
+        intervaloPedidos = null;
+      }
+
       if (page === 'pedidos') {
         document.getElementById('pagePedidos').classList.add('ativa');
         carregarPedidos();
+        // Atualiza fases a cada 30s enquanto estiver na tela de pedidos
+        intervaloPedidos = setInterval(() => {
+          if (document.getElementById('pagePedidos')?.classList.contains('ativa')) {
+            carregarPedidos();
+          } else {
+            clearInterval(intervaloPedidos);
+            intervaloPedidos = null;
+          }
+        }, 30000);
       } else if (page === 'perfil') {
         abrirPerfil();
+        document.getElementById('pagePedidos').classList.remove('ativa');
       } else {
         document.getElementById('pagePedidos').classList.remove('ativa');
       }
@@ -404,6 +422,7 @@ function setupCarrossel() {
         preco: 'Escolha os sabores',
         small: 'Desconto na hora',
         emoji: '🍕',
+        img: 'img/promo-2-pizzas.jpg',
         acao: 'abrirComboSabores()'
       },
       {
@@ -413,6 +432,7 @@ function setupCarrossel() {
         preco: 'R$ 89,00',
         small: 'Pizza + bebida',
         emoji: '👨‍👩‍👧‍👦',
+        img: 'img/promo-familia.jpg',
         acao: 'addCombo(2)'
       },
       {
@@ -422,6 +442,7 @@ function setupCarrossel() {
         preco: 'R$ 55,00',
         small: 'Sobremesa da casa',
         emoji: '🍫',
+        img: 'img/promo-doce.jpg',
         acao: 'addCombo(3)'
       },
       {
@@ -431,6 +452,7 @@ function setupCarrossel() {
         preco: 'R$ 45,00',
         small: 'Porção infantil',
         emoji: '🎁',
+        img: 'img/promo-kids.jpg',
         acao: 'addCombo(5)'
       },
       {
@@ -440,6 +462,7 @@ function setupCarrossel() {
         preco: 'R$ 98,90',
         small: 'Para compartilhar',
         emoji: '🔥',
+        img: 'img/promo-familia-promo.jpg',
         acao: 'addCombo(0)'
       }
     ];
@@ -452,7 +475,9 @@ function setupCarrossel() {
           <p class="promo-preco">${p.preco}</p>
           <small>${p.small}</small>
         </div>
-        <span class="promo-emoji">${p.emoji}</span>
+        <span class="promo-emoji">${p.img
+          ? `<img src="${p.img}" alt="${p.titulo}" onerror="this.parentNode.textContent='${p.emoji}'">`
+          : p.emoji}</span>
         <button type="button" class="btn-promo" onclick="${p.acao}">Pegar promo</button>
       </div>
     `).join('');
@@ -1252,32 +1277,62 @@ function carregarProdutos() {
 
   if (produtos.length === 0) {
     produtos = [
-      { id: 1, nome: 'Calabresa', preco: 29.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 2, nome: 'Frango com Catupiry', preco: 34.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 3, nome: '4 Queijos', preco: 36.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 4, nome: 'Portuguesa', preco: 32.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 5, nome: 'Margherita', preco: 28.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 6, nome: 'Pepperoni', preco: 35.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 7, nome: 'Mussarela', preco: 27.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 8, nome: 'Bacon', preco: 33.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 9, nome: 'Carne Seca', preco: 39.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 10, nome: 'Baiana', preco: 34.90, categoria: 'Pizza', emoji: '🍕' },
-      { id: 30, nome: 'Chocolate com Morango', preco: 39.90, categoria: 'Doce', emoji: '🍫' },
-      { id: 31, nome: 'Nutella com Leite Ninho', preco: 39.90, categoria: 'Doce', emoji: '🍫' },
-      { id: 32, nome: 'Romeu e Julieta', preco: 36.90, categoria: 'Doce', emoji: '🍰' },
-      { id: 33, nome: 'Banana com Canela', preco: 34.90, categoria: 'Doce', emoji: '🍌' },
-      { id: 50, nome: 'Coca-Cola 2L', preco: 12.00, categoria: 'Bebida', emoji: '🥤' },
-      { id: 51, nome: 'Guaraná 2L', preco: 11.00, categoria: 'Bebida', emoji: '🥤' },
-      { id: 52, nome: 'Suco de Laranja', preco: 10.00, categoria: 'Bebida', emoji: '🧃' },
-      { id: 53, nome: 'Água Mineral', preco: 4.00, categoria: 'Bebida', emoji: '💧' },
-      { id: 70, nome: 'Combo Calabresa', preco: 52.00, categoria: 'Combo', emoji: '🎁' },
-      { id: 71, nome: 'Combo Família', preco: 89.00, categoria: 'Combo', emoji: '🎁' },
-      { id: 72, nome: 'Combo Kids', preco: 45.00, categoria: 'Combo', emoji: '🎁' }
+      { id: 1, nome: 'Calabresa', preco: 29.90, categoria: 'Pizza', emoji: '🍕', tempo: 30},
+      { id: 2, nome: 'Frango com Catupiry', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 32,},
+      { id: 3, nome: '4 Queijos', preco: 36.90, categoria: 'Pizza', emoji: '🍕', tempo: 28,},
+      { id: 4, nome: 'Portuguesa', preco: 32.90, categoria: 'Pizza', emoji: '🍕', tempo: 35,},
+      { id: 5, nome: 'Margherita', preco: 28.90, categoria: 'Pizza', emoji: '🍕', tempo: 25, img: 'img/margherita.jpg' },
+      { id: 6, nome: 'Pepperoni', preco: 35.90, categoria: 'Pizza', emoji: '🍕', tempo: 30, img: 'img/pepperoni.jpg' },
+      { id: 7, nome: 'Mussarela', preco: 27.90, categoria: 'Pizza', emoji: '🍕', tempo: 25, img: 'img/mussarela.jpg' },
+      { id: 8, nome: 'Bacon', preco: 33.90, categoria: 'Pizza', emoji: '🍕', tempo: 32, img: 'img/bacon.jpg' },
+      { id: 9, nome: 'Carne Seca', preco: 39.90, categoria: 'Pizza', emoji: '🍕', tempo: 35, img: 'img/carneseca.jpg' },
+      { id: 10, nome: 'Baiana', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 33, img: 'img/baiana.jpg' },
+      { id: 11, nome: 'Teste', preco: 0.01, categoria: 'Pizza', emoji: '🍕', tempo: 15, img: 'img/teste.jpg' },
+      { id: 30, nome: 'Chocolate com Morango', preco: 39.90, categoria: 'Doce', emoji: '🍫', tempo: 25 },
+      { id: 31, nome: 'Nutella com Leite Ninho', preco: 39.90, categoria: 'Doce', emoji: '🍫', tempo: 22 },
+      { id: 32, nome: 'Romeu e Julieta', preco: 36.90, categoria: 'Doce', emoji: '🍰', tempo: 20 },
+      { id: 33, nome: 'Banana com Canela', preco: 34.90, categoria: 'Doce', emoji: '🍌', tempo: 22 },
+      { id: 50, nome: 'Coca-Cola 2L', preco: 12.00, categoria: 'Bebida', emoji: '🥤', tempo: 5 },
+      { id: 51, nome: 'Guaraná 2L', preco: 11.00, categoria: 'Bebida', emoji: '🥤', tempo: 5 },
+      { id: 52, nome: 'Suco de Laranja', preco: 10.00, categoria: 'Bebida', emoji: '🧃', tempo: 8 },
+      { id: 53, nome: 'Água Mineral', preco: 4.00, categoria: 'Bebida', emoji: '💧', tempo: 3 },
+      { id: 70, nome: 'Combo Calabresa', preco: 52.00, categoria: 'Combo', emoji: '🎁', tempo: 35 },
+      { id: 71, nome: 'Combo Família', preco: 89.00, categoria: 'Combo', emoji: '🎁', tempo: 40 },
+      { id: 72, nome: 'Combo Kids', preco: 45.00, categoria: 'Combo', emoji: '🎁', tempo: 30 }
     ];
   }
 
+  // Cada produto usa img/<nome-do-produto>.jpg (se não existir, mostra o emoji)
+  produtos.forEach(p => {
+    p.img = 'img/' + (NOMES_IMAGEM[p.nome] || slugImagem(p.nome)) + '.jpg';
+  });
+
+  // Garante tempo de preparo mesmo quando vem do banco
+  produtos.forEach(p => {
+    if (p.tempo == null) {
+      if (p.categoria === 'Bebida') p.tempo = 5;
+      else if (p.categoria === 'Doce') p.tempo = 22;
+      else if (p.categoria === 'Combo') p.tempo = 35;
+      else p.tempo = 30;
+    }
+  });
+
   renderProdutos('todos');
 }
+
+// Gera o caminho da imagem a partir do nome: "Frango com Catupiry" -> img/frango-com-catupiry.jpg
+function slugImagem(nome) {
+  return String(nome || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// Exceções: produto -> nome do arquivo (sem .jpg) quando não segue a regra automática
+const NOMES_IMAGEM = {
+  '4 Queijos': '4queijos'
+};
 
 function emojiProduto(p) {
   if (p.emoji) return p.emoji;
@@ -1331,6 +1386,7 @@ function renderProdutos(categoria, busca = '') {
   if (categoria === 'todos') {
     function montarSecaoLinha(titulo, itens, id) {
       if (!itens.length) return '';
+      const classeExtra = itens.length <= 5 ? ' centralizado' : '';
       return `
         <div class="secao-bloco">
           <div class="secao-header">
@@ -1340,7 +1396,7 @@ function renderProdutos(categoria, busca = '') {
               <button type="button" class="secao-seta" onclick="moverCarrossel('${id}', 1)">›</button>
             </div>
           </div>
-          <div class="carrossel-produtos carrossel-5" id="${id}">
+          <div class="carrossel-produtos carrossel-5${classeExtra}" id="${id}">
             ${itens.map(p => cardCirculo(p)).join('')}
           </div>
         </div>`;
@@ -1388,13 +1444,29 @@ function moverCarrossel(id, direcao) {
   el.scrollBy({ left: direcao * passo, behavior: 'smooth' });
 }
 
+function tempoPreparoTexto(p) {
+  const t = p.tempo || (p.categoria === 'Bebida' ? 5 : p.categoria === 'Doce' ? 22 : p.categoria === 'Combo' ? 35 : 30);
+  return t <= 5 ? `${t} min` : `~${t} min`;
+}
+
+function fotoProdutoHtml(p, classe) {
+  const emoji = emojiProduto(p);
+  if (p.img) {
+    return `<div class="${classe}" data-emoji="${emoji}" data-nome="${p.nome}">
+      <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='${emoji}'">
+    </div>`;
+  }
+  return `<div class="${classe}" data-emoji="${emoji}" data-nome="${p.nome}">${emoji}</div>`;
+}
+
 function cardCirculo(p) {
   const preco = p.preco.toFixed(2).replace('.', ',');
   return `
     <button type="button" class="produto-circulo" onclick="abrirDetalheProduto(${p.id})">
-      <div class="foto" data-emoji="${emojiProduto(p)}" data-nome="${p.nome}">${emojiProduto(p)}</div>
+      ${fotoProdutoHtml(p, 'foto')}
       <span class="nome">${p.nome}</span>
       <span class="preco"><small>R$</small> ${preco}</span>
+      <span class="tempo">⏱ ${tempoPreparoTexto(p)}</span>
     </button>
   `;
 }
@@ -1403,10 +1475,11 @@ function cardLinha(p) {
   const preco = p.preco.toFixed(2).replace('.', ',');
   return `
     <button type="button" class="produto-linha" onclick="abrirDetalheProduto(${p.id})">
-      <div class="foto-mini" data-emoji="${emojiProduto(p)}" data-nome="${p.nome}">${emojiProduto(p)}</div>
+      ${fotoProdutoHtml(p, 'foto-mini')}
       <div class="info">
         <span class="nome">${p.nome}</span>
         <span class="preco">R$ ${preco}</span>
+        <span class="tempo">⏱ ${tempoPreparoTexto(p)}</span>
       </div>
       <span class="btn-add-linha" onclick="event.stopPropagation(); addItem(${p.id})">+</span>
     </button>
@@ -1436,9 +1509,13 @@ function abrirDetalheProduto(id) {
 
   const foto = document.getElementById('prodDetalheFoto');
   if (foto) {
-    foto.textContent = emojiProduto(p);
     foto.dataset.emoji = emojiProduto(p);
     foto.dataset.nome = p.nome;
+    if (p.img) {
+      foto.innerHTML = `<img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.parentNode.textContent='${emojiProduto(p)}'">`;
+    } else {
+      foto.textContent = emojiProduto(p);
+    }
   }
   const nome = document.getElementById('prodDetalheNome');
   if (nome) nome.textContent = p.nome;
@@ -1453,8 +1530,10 @@ function abrirDetalheProduto(id) {
 
   const lista = document.getElementById('prodDetalheLista');
   if (lista) {
+    const tempo = p.tempo || (p.categoria === 'Bebida' ? 5 : p.categoria === 'Doce' ? 22 : p.categoria === 'Combo' ? 35 : 30);
     const bullets = [
       `Categoria: ${tituloSecao(p.categoria)}`,
+      `⏱ Tempo de preparo: ~${tempo} minutos`,
       'Preparado na hora com ingredientes selecionados',
       'Receita da casa Trattoria Aldini',
       p.categoria === 'Pizza' ? 'Massa artesanal e forno a ponto' :
@@ -1531,7 +1610,7 @@ function ativarExpandirImagens() {
       pressTimer = setTimeout(() => {
         const emoji = el.dataset.emoji || el.textContent.trim();
         const nome = el.dataset.nome || '';
-        abrirZoom(emoji, nome);
+        abrirZoom(emoji, nome, el.querySelector('img')?.src);
       }, 450);
     };
     const cancelPress = () => {
@@ -1553,13 +1632,24 @@ function ativarExpandirImagens() {
       e.stopPropagation();
       const emoji = el.dataset.emoji || el.textContent.trim();
       const nome = el.dataset.nome || '';
-      abrirZoom(emoji, nome);
+      abrirZoom(emoji, nome, el.querySelector('img')?.src);
     });
   });
 }
 
-function abrirZoom(emoji, nome) {
-  document.getElementById('zoomEmoji').textContent = emoji || '🍕';
+function abrirZoom(emoji, nome, src) {
+  const box = document.getElementById('zoomEmoji');
+  if (src) {
+    box.innerHTML = '';
+    const im = document.createElement('img');
+    im.src = src;
+    im.alt = nome || '';
+    im.className = 'zoom-img';
+    im.onerror = () => { box.textContent = emoji || '🍕'; };
+    box.appendChild(im);
+  } else {
+    box.textContent = emoji || '🍕';
+  }
   document.getElementById('zoomNome').textContent = nome || '';
   document.getElementById('modalZoom').style.display = 'flex';
 }
@@ -1828,8 +1918,64 @@ function salvarPedidoConfirmado(dados, forma, statusPagamento) {
   return idPedido;
 }
 
+function getFasePedido(dataStr) {
+  // Fases por tempo decorrido desde o pedido
+  // 0-4 min: Recebido | 4-18 min: Cozinhando | 18-28 min: Separando | 28-50 min: Entregando | >50: Entregue
+  const agora = Date.now();
+  let dataPedido = agora;
+  try {
+    dataPedido = new Date(dataStr).getTime();
+    if (isNaN(dataPedido)) dataPedido = agora;
+  } catch (e) {
+    dataPedido = agora;
+  }
+  const minutos = Math.max(0, Math.floor((agora - dataPedido) / 60000));
+
+  if (minutos < 4) {
+    return { key: 'recebido', label: 'Recebido', idx: 0, minutos, restante: 4 - minutos };
+  }
+  if (minutos < 18) {
+    return { key: 'cozinhando', label: 'Cozinhando', idx: 1, minutos, restante: 18 - minutos };
+  }
+  if (minutos < 28) {
+    return { key: 'separando', label: 'Separando', idx: 2, minutos, restante: 28 - minutos };
+  }
+  if (minutos < 50) {
+    return { key: 'entregando', label: 'A caminho', idx: 3, minutos, restante: 50 - minutos };
+  }
+  return { key: 'entregue', label: 'Entregue', idx: 4, minutos, restante: 0 };
+}
+
+function htmlProgressoPedido(fase) {
+  const fases = [
+    { nome: 'Recebido', icone: '✅' },
+    { nome: 'Cozinhando', icone: '🔥' },
+    { nome: 'Separando', icone: '📦' },
+    { nome: 'Entregando', icone: '🛵' },
+    { nome: 'Entregue', icone: '🏠' }
+  ];
+  return `
+    <div class="pedido-progresso">
+      ${fases.map((f, i) => {
+        let cls = '';
+        if (i < fase.idx) cls = 'concluida';
+        else if (i === fase.idx) cls = 'ativa';
+        return `<div class="pedido-fase ${cls}">
+          <span class="fase-icone">${f.icone}</span>
+          <span class="fase-nome">${f.nome}</span>
+        </div>`;
+      }).join('')}
+    </div>
+    ${fase.key !== 'entregue'
+      ? `<div class="pedido-tempo-restante">⏱ Próxima etapa em ~${fase.restante} min · Total ~${Math.max(0, 50 - fase.minutos)} min restantes</div>`
+      : `<div class="pedido-tempo-restante" style="background:#e8f5e9;color:#1f7a3a;">✅ Pedido entregue!</div>`
+    }
+  `;
+}
+
 function carregarPedidos() {
   const box = document.getElementById('listaPedidos');
+  if (!box) return;
   if (typeof verificarBanco === 'function' && !verificarBanco()) return;
 
   if (!clienteLogado) {
@@ -1850,16 +1996,32 @@ function carregarPedidos() {
     return;
   }
 
-  box.innerHTML = result[0].values.map(row => `
+  const cols = result[0].columns || [];
+  const idxId = cols.indexOf('id') >= 0 ? cols.indexOf('id') : 0;
+  const idxTotal = cols.indexOf('total') >= 0 ? cols.indexOf('total') : 2;
+  const idxStatus = cols.indexOf('status') >= 0 ? cols.indexOf('status') : 3;
+  const idxData = cols.indexOf('data') >= 0 ? cols.indexOf('data') : (cols.indexOf('data_pedido') >= 0 ? cols.indexOf('data_pedido') : 4);
+
+  box.innerHTML = result[0].values.map(row => {
+    const id = row[idxId];
+    const total = parseFloat(row[idxTotal]) || 0;
+    const dataRaw = row[idxData];
+    const fase = getFasePedido(dataRaw);
+    const badgeClass = fase.key;
+    const badgeLabel = fase.label;
+
+    return `
     <div class="pedido-card">
       <div class="topo">
-        <strong>Pedido #${row[0]}</strong>
-        <span class="badge ${(row[3] || 'pendente').toLowerCase()}">${row[3] || 'Pendente'}</span>
+        <strong>Pedido #${id}</strong>
+        <span class="badge ${badgeClass}">${badgeLabel}</span>
       </div>
-      <p style="font-size:13px;color:#666;">${formatarData(row[4])}</p>
-      <p style="margin-top:6px;font-weight:600;">R$ ${parseFloat(row[2]).toFixed(2).replace('.', ',')}</p>
+      <p style="font-size:13px;color:#666;">${formatarData(dataRaw)}</p>
+      <p style="margin-top:6px;font-weight:600;">R$ ${total.toFixed(2).replace('.', ',')}</p>
+      ${htmlProgressoPedido(fase)}
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function formatarData(d) {

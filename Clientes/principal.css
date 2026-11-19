@@ -236,6 +236,7 @@ body {
   scrollbar-width: none;
   width: 100%;
   cursor: grab;
+  justify-content: center;
 }
 
 .carrossel:active {
@@ -537,6 +538,10 @@ body {
   padding: 0 16px 8px !important;
   scrollbar-width: none;
   cursor: grab;
+}
+
+.carrossel-produtos.carrossel-5.centralizado {
+  justify-content: center;
 }
 
 .carrossel-produtos.carrossel-5::-webkit-scrollbar {
@@ -1356,10 +1361,84 @@ body {
   font-weight: 600;
 }
 
-.badge.pendente { background: #fff3cd; color: #856404; }
-.badge.preparando { background: #cce5ff; color: #004085; }
+.badge.pendente,
+.badge.recebido { background: #fff3cd; color: #856404; }
+.badge.preparando,
+.badge.cozinhando { background: #cce5ff; color: #004085; }
+.badge.separando { background: #e0d4f7; color: #5a3d8a; }
+.badge.entregando,
+.badge.a-caminho { background: #ffe0b2; color: #e65100; }
 .badge.entregue,
 .badge.confirmado { background: #d4edda; color: #155724; }
+
+/* Progresso do pedido */
+.pedido-progresso {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+  gap: 4px;
+}
+
+.pedido-fase {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  color: #bbb;
+  position: relative;
+}
+
+.pedido-fase .fase-icone {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 4px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.pedido-fase .fase-nome {
+  display: block;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.pedido-fase.ativa {
+  color: #ea1d2c;
+  font-weight: 600;
+}
+
+.pedido-fase.ativa .fase-icone {
+  opacity: 1;
+}
+
+.pedido-fase.concluida {
+  color: #1f7a3a;
+}
+
+.pedido-fase.concluida .fase-icone {
+  opacity: 1;
+}
+
+.pedido-tempo-restante {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  background: #f8f8f8;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.produto-circulo .tempo,
+.lista-vertical .info .tempo {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+  font-weight: 500;
+}
 
 /* =========================================================
    MODAIS (base)
@@ -2344,4 +2423,44 @@ body {
 
   .ml-titulo { font-size: 22px; }
   .ml-preco { font-size: 34px; }
+}
+
+/* ===== Imagens dos produtos ===== */
+.foto img,
+.foto-mini img,
+.prod-detalhe-foto img,
+.promo-emoji img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+  pointer-events: none;
+}
+
+.produto-circulo .foto,
+.lista-vertical .foto-mini,
+.ml-img-principal .prod-detalhe-foto {
+  overflow: hidden;
+}
+
+.promo-emoji:has(img) {
+  width: 84px;
+  height: 84px;
+  top: 36px;
+  opacity: 1;
+}
+
+.promo-emoji img {
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.zoom-emoji .zoom-img {
+  width: min(80vw, 360px);
+  height: min(80vw, 360px);
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
