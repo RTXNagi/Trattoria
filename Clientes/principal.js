@@ -1281,13 +1281,23 @@ function carregarProdutos() {
       { id: 2, nome: 'Frango com Catupiry', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 32,},
       { id: 3, nome: '4 Queijos', preco: 36.90, categoria: 'Pizza', emoji: '🍕', tempo: 28,},
       { id: 4, nome: 'Portuguesa', preco: 32.90, categoria: 'Pizza', emoji: '🍕', tempo: 35,},
-      { id: 5, nome: 'Margherita', preco: 28.90, categoria: 'Pizza', emoji: '🍕', tempo: 25, img: 'img/margherita.jpg' },
-      { id: 6, nome: 'Pepperoni', preco: 35.90, categoria: 'Pizza', emoji: '🍕', tempo: 30, img: 'img/pepperoni.jpg' },
-      { id: 7, nome: 'Mussarela', preco: 27.90, categoria: 'Pizza', emoji: '🍕', tempo: 25, img: 'img/mussarela.jpg' },
-      { id: 8, nome: 'Bacon', preco: 33.90, categoria: 'Pizza', emoji: '🍕', tempo: 32, img: 'img/bacon.jpg' },
-      { id: 9, nome: 'Carne Seca', preco: 39.90, categoria: 'Pizza', emoji: '🍕', tempo: 35, img: 'img/carneseca.jpg' },
-      { id: 10, nome: 'Baiana', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 33, img: 'img/baiana.jpg' },
-      { id: 11, nome: 'Teste', preco: 0.01, categoria: 'Pizza', emoji: '🍕', tempo: 15, img: 'img/teste.jpg' },
+      { id: 5, nome: 'Margherita', preco: 28.90, categoria: 'Pizza', emoji: '🍕', tempo: 25 },
+      { id: 6, nome: 'Pepperoni', preco: 35.90, categoria: 'Pizza', emoji: '🍕', tempo: 30 },
+      { id: 7, nome: 'Mussarela', preco: 27.90, categoria: 'Pizza', emoji: '🍕', tempo: 25 },
+      { id: 8, nome: 'Bacon', preco: 33.90, categoria: 'Pizza', emoji: '🍕', tempo: 32 },
+      { id: 9, nome: 'Carne Seca', preco: 39.90, categoria: 'Pizza', emoji: '🍕', tempo: 35 },
+      { id: 10, nome: 'Baiana', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 33 },
+      { id: 12, nome: 'Frango com Cheddar', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 32 },
+      { id: 13, nome: 'Calabresa Acebolada', preco: 31.90, categoria: 'Pizza', emoji: '🍕', tempo: 30 },
+      { id: 14, nome: 'Strogonoff de Frango', preco: 37.90, categoria: 'Pizza', emoji: '🍕', tempo: 35 },
+      { id: 15, nome: 'Strogonoff de Carne', preco: 39.90, categoria: 'Pizza', emoji: '🍕', tempo: 35 },
+      { id: 16, nome: 'Lombo Canadense', preco: 34.90, categoria: 'Pizza', emoji: '🍕', tempo: 32 },
+      { id: 17, nome: 'Napolitana', preco: 31.90, categoria: 'Pizza', emoji: '🍕', tempo: 28 },
+      { id: 18, nome: 'Atum', preco: 35.90, categoria: 'Pizza', emoji: '🍕', tempo: 30 },
+      { id: 19, nome: 'Alho e Óleo', preco: 30.90, categoria: 'Pizza', emoji: '🍕', tempo: 28 },
+      { id: 20, nome: 'Palmito', preco: 33.90, categoria: 'Pizza', emoji: '🍕', tempo: 30 },
+      { id: 21, nome: 'Vegetariana', preco: 33.90, categoria: 'Pizza', emoji: '🍕', tempo: 30 },
+      { id: 11, nome: 'Teste', preco: 0.01, categoria: 'Pizza', emoji: '🍕', tempo: 15 },
       { id: 30, nome: 'Chocolate com Morango', preco: 39.90, categoria: 'Doce', emoji: '🍫', tempo: 25 },
       { id: 31, nome: 'Nutella com Leite Ninho', preco: 39.90, categoria: 'Doce', emoji: '🍫', tempo: 22 },
       { id: 32, nome: 'Romeu e Julieta', preco: 36.90, categoria: 'Doce', emoji: '🍰', tempo: 20 },
@@ -1329,10 +1339,42 @@ function slugImagem(nome) {
     .replace(/^-+|-+$/g, '');
 }
 
-// Exceções: produto -> nome do arquivo (sem .jpg) quando não segue a regra automática
+// Nome do arquivo de imagem de cada produto (SEM a extensão: o site testa .jpg, .png, .jpeg e .webp).
+// Produto que não estiver aqui usa a regra automática: "Frango com Catupiry" -> frango-com-catupiry
 const NOMES_IMAGEM = {
-  '4 Queijos': '4queijos'
+  '4 Queijos': '4queijos',
+  'Calabresa': 'calabresa',
+  'Frango com Catupiry': 'frango-catupirosca',
+  'Portuguesa': 'portuguesa',
+  'Pepperoni': 'pepperone',
+  'Margherita': 'margherita',
+  'Mussarela': 'musarela',
+  'Bacon': 'bacon',
+  'Carne Seca': 'carne-seca',
+  'Baiana': 'baiana',
+  'Frango com Cheddar': 'frango-com-cheddar',
+  'Calabresa Acebolada': 'calabresa-acebolada',
+  'Strogonoff de Frango': 'strogonoff-de-frango',
+  'Strogonoff de Carne': 'strogonoff-de-carne',
+  'Lombo Canadense': 'lombo-canadense',
+  'Napolitana': 'napolitana',
+  'Atum': 'atum',
+  'Alho e Óleo': 'alho-e-óleo',
+  'Palmito': 'palmito',
+  'Vegetariana': 'vegetariana'
 };
+
+// Se a imagem não carregar com .jpg, tenta as outras extensões e por fim mostra o emoji
+const EXTENSOES_IMAGEM = ['jpg', 'png', 'jpeg', 'webp'];
+function erroImagem(el, emoji) {
+  const n = (parseInt(el.dataset.ext || '0', 10)) + 1;
+  if (n < EXTENSOES_IMAGEM.length) {
+    el.dataset.ext = n;
+    el.src = el.getAttribute('src').replace(/\.\w+$/, '.' + EXTENSOES_IMAGEM[n]);
+  } else {
+    el.parentNode.textContent = emoji;
+  }
+}
 
 function emojiProduto(p) {
   if (p.emoji) return p.emoji;
@@ -1453,7 +1495,7 @@ function fotoProdutoHtml(p, classe) {
   const emoji = emojiProduto(p);
   if (p.img) {
     return `<div class="${classe}" data-emoji="${emoji}" data-nome="${p.nome}">
-      <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='${emoji}'">
+      <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="erroImagem(this,'${emoji}')">
     </div>`;
   }
   return `<div class="${classe}" data-emoji="${emoji}" data-nome="${p.nome}">${emoji}</div>`;
@@ -1512,7 +1554,7 @@ function abrirDetalheProduto(id) {
     foto.dataset.emoji = emojiProduto(p);
     foto.dataset.nome = p.nome;
     if (p.img) {
-      foto.innerHTML = `<img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.parentNode.textContent='${emojiProduto(p)}'">`;
+      foto.innerHTML = `<img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="erroImagem(this,'${emojiProduto(p)}')">`;
     } else {
       foto.textContent = emojiProduto(p);
     }
